@@ -397,6 +397,20 @@ select{border:2px solid var(--line);border-radius:12px;padding:8px 10px;backgrou
 .tip-btns{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .tip-dots{display:flex;gap:5px;justify-content:center;flex:1}.tip-dots i{width:7px;height:7px;border-radius:50%;background:var(--track)}.tip-dots i.on{background:var(--pink);width:18px;border-radius:99px}
 .truco{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}.truco p{margin:2px 0 0;font-size:.9rem}.tr-ic{flex:none}
+.correct.gist ins{background:#c9f2e9;text-decoration:none;border-bottom:2px solid var(--teal);padding:0 2px;border-radius:3px}
+.correct.gist mark{background:#ffe08a;padding:0 2px;border-radius:3px}
+.notif.lesson-card{background:#efe8fb;border-color:#cdbbef}
+.lesson-offer{background:var(--jac-soft);border-color:#cdbbef;color:var(--jac);margin-top:8px}
+.frame{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:4px 0}
+.frame span{border-radius:12px;padding:8px 12px;font-weight:800;font-size:1.05rem;animation:pop .35s both}
+.frame .fixed{background:#fff;border:2px solid var(--jac);color:var(--jac)}
+.frame .slot{background:var(--mari-soft);border:2px dashed var(--marigold);color:#8a5a00}
+.lesson-ex{display:grid;gap:6px}
+.lx{display:flex;justify-content:space-between;align-items:center;background:#fff;border-radius:12px;padding:6px 10px;border:1px solid var(--line)}
+.lx b{display:block}.lx small{color:var(--muted)}
+.lesson-table td{font-size:.95rem}
+.lesson-row{display:flex;align-items:center;gap:10px;width:100%;background:#fff;border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:6px 0;text-align:left}
+.lesson-row .lr-e{font-size:1.4rem}.lesson-row .lr-t{flex:1;display:flex;flex-direction:column}.lesson-row small{color:var(--muted)}
 .pop-art{display:flex;justify-content:center;animation:pop .5s ease-out}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -2035,6 +2049,47 @@ function typoMatch(sn, list, it) {
   }
   return null;
 }
+/* "¡Se entiende!" — a sentence a Spanish speaker would understand: every important word is there
+   (maybe with the wrong ending), only small words are missing/extra, or the order is a bit off. */
+const SMALL = new Set(["el", "la", "los", "las", "un", "una", "unos", "unas", "de", "del", "a", "al", "en", "con", "por", "para", "y", "o", "que", "me", "te", "se", "le", "les", "nos", "lo", "mi", "mis", "tu", "tus", "su", "sus", "muy", "yo"]);
+function wordEq(a, b) { if (a === b) return true; if (a.length < 4 || osa(a, b) > 1) return false; let p = 0; while (p < a.length && a[p] === b[p]) p++; return p < Math.max(a.length, b.length) - 2; }  // typo yes, ending change no
+function stemEq(a, b) {
+  if (a.length < 3 || b.length < 3) return false;
+  if (!ALL_FORMS.size) Object.values(CONTENT.VERBS).forEach(v => v.f.forEach(f => ALL_FORMS.add(strip(f))));
+  const fa = vForm(a), fb = vForm(b); if (fa && fb && fa === fb) return true;
+  let p = 0; while (p < a.length && a[p] === b[p]) p++;
+  return p >= Math.min(4, Math.min(a.length, b.length) - 1) && p >= 3;
+}
+function vForm(w) { for (const [v, d] of Object.entries(CONTENT.VERBS)) if (d.f.some(f => strip(f) === w)) return v; return null; }
+function gistMatch(sn, list, it) {
+  if (!["s", "l"].includes(it.t)) return null;
+  const iw = sn.split(" ").filter(Boolean);
+  let best = null;
+  for (const a of list) {
+    const awRaw = a.split(" "), aw = strip(a).split(" ");
+    if (aw.length < 3) continue;
+    const used = new Array(iw.length).fill(false);
+    const missing = [], endings = []; let contentN = 0, contentOk = 0; const order = [];
+    aw.forEach((w, k) => {
+      const small = SMALL.has(w);
+      if (!small) contentN++;
+      let j = iw.findIndex((x, q) => !used[q] && wordEq(w, x));
+      let how = "exact";
+      if (j < 0 && !small) { j = iw.findIndex((x, q) => !used[q] && stemEq(w, x)); how = "stem"; }
+      if (j >= 0) { used[j] = true; order.push(j); if (!small) contentOk++; if (how === "stem") endings.push([awRaw[k], iw[j]]); }
+      else missing.push({ w: awRaw[k], small });
+    });
+    const extra = iw.filter((x, q) => !used[q]);
+    const missingContent = missing.filter(m => !m.small).length;
+    const missingSmall = missing.filter(m => m.small).map(m => m.w);
+    const reordered = order.some((v, q) => q > 0 && v < order[q - 1]);
+    const problems = missing.length + endings.length + extra.length + (reordered ? 1 : 0);
+    if (!problems) continue;
+    const ok = contentN >= 1 && missingContent === 0 && extra.length <= 2 && endings.length <= 2 && (missingSmall.length + endings.length + extra.length) <= Math.max(2, Math.floor(aw.length / 3));
+    if (ok && (!best || problems < best.problems)) best = { match: a, missing: missingSmall, endings, extra, reordered, problems };
+  }
+  return best;
+}
 /* Spanish punctuation teachers grade: opening ¿ ¡ and closing ? !  (sentences only) */
 function punctIssues(input, it) {
   if (!["s", "l"].includes(it.t)) return [];
@@ -2063,6 +2118,8 @@ function check(input, it, opts) {
   }
   const ty = typoMatch(sn, list, it);
   if (ty) return { r: "typo", match: ty.match, words: ty.words, punct };
+  const gi = gistMatch(sn, list, it);
+  if (gi) return Object.assign({ r: "gist", punct }, gi);
   if (it.t === "j") {
     const forms = CONTENT.VERBS[it.verb].f;
     const k = forms.findIndex(f => strip(f) === sn);
@@ -2116,7 +2173,7 @@ function freshState() {
     sessions: [], daily: {}, streak: { count: 0, last: null, freezes: 2, best: 0 },
     fotos: [], log: [], mystery: {}, mysteryPending: [], goals: { weekly: 3 }, recent: [],
     focusShaky: false, reads: {}, writes: {},
-    xp: 0, puzzles: {}, animals: [], pieces: [], outfit: 0, proveTry: {}, puzzleStep: {}, locIntro: {}, introSeen: 0, lastBackup: 0, sinceBackup: 0, tips: {}
+    xp: 0, puzzles: {}, animals: [], pieces: [], outfit: 0, proveTry: {}, puzzleStep: {}, locIntro: {}, introSeen: 0, lastBackup: 0, sinceBackup: 0, tips: {}, lessons: {}
   };
 }
 function st(id) {
@@ -2147,7 +2204,8 @@ function rolling() { const r = S.recent.slice(-20); return r.length >= 8 ? acc(r
    ctx: {lv, countable} */
 function record(id, outcome, ctx) {
   const T = today(), s = st(id), lv = ctx.lv;
-  if (outcome === "accent" && S.settings.strict) outcome = "wrong";
+  if ((outcome === "accent" || outcome === "gist") && S.settings.strict) outcome = "wrong";
+  if (outcome === "gist") outcome = "retryok";   // counts as understood (learned / boss), not as mastery; comes back sooner
   const correct = ["ok", "accent", "retryok", "hint"].includes(outcome);
   const clean = outcome === "ok" || outcome === "accent";
   s.seen++; s.intro = s.intro || T;
@@ -2322,8 +2380,14 @@ function buildCheckpoint(u) {
   const ids = UNIT_BASE[u];
   const byType = {}; ids.forEach(id => (byType[ITEM[id].t] = byType[ITEM[id].t] || []).push(id));
   const picks = new Set();
-  const want = { s: 4, c: 2, v: 1, j: 2, n: 2 };
+  const met = id => { const s = peek(id); return s && s.intro && (s.lv >= 2 || s.box >= 1 || s.solid); };
+  Object.keys(byType).forEach(t => byType[t] = byType[t].filter(met).length >= 2 ? byType[t].filter(met) : byType[t]);
+  // mirror the chapter's mix (vocab, numbers, fill-ins, verbs, sentences), sentences capped at 3
+  const total = ids.length; const want = {};
+  Object.keys(byType).forEach(t => want[t] = Math.max(1, Math.round(10 * byType[t].length / total)));
+  if (want.s) want.s = Math.min(3, want.s);
   Object.keys(want).forEach(t => (shuffle(byType[t] || []).slice(0, want[t])).forEach(id => picks.add(id)));
+  shuffle(ids.filter(met)).forEach(id => { if (picks.size < 10 && ITEM[id].t !== "s") picks.add(id); });
   shuffle(ids).forEach(id => { if (picks.size < 10) picks.add(id); });
   return shuffle([...picks].slice(0, 10)).map(id => ({ id, kind: "task", lv: 3, countable: isDue(id), cp: true }));
 }
@@ -2461,7 +2525,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
   }
   function migrate(o) { const f = freshState(); for (const k in f) if (!(k in o)) o[k] = f[k]; for (const k in f.settings) if (!(k in o.settings)) o.settings[k] = f.settings[k]; return o; }
 
-  const APP_VERSION = "2.6 (Nov 21)";
+  const APP_VERSION = "2.7 (Nov 24)";
   /* ---------------- backups (code text; works anywhere copy/paste works) ---------------- */
   const b64 = bytes => { let s = ""; bytes.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
   const unb64 = str => Uint8Array.from(atob(str), c => c.charCodeAt(0));
@@ -2762,6 +2826,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         n ? h("span", { class: "badge" }, n > 99 ? "99+" : n) : null),
       pz ? h("button", { class: "notif puzzle", onclick: () => runPuzzle(pz) }, h("div", { class: "app-ic", "aria-hidden": "true" }, "🧩"), h("div", { class: "nt" }, h("b", null, `Ana's puzzle: ${PUZZLES[pz].title}`), h("span", null, `${PUZZLES[pz].sub} · ${locOf(pz).name}`))) : null,
       boss ? h("button", { class: "notif cp", onclick: checkpointIntro }, h("div", { class: "app-ic boss-ic", "aria-hidden": "true" }, boss.av), h("div", { class: "nt" }, h("b", null, `Boss: ${boss.name}`), h("span", null, `${boss.who} · win ${Math.ceil(10 * CP_PASS)} of 10 to finish ${loc.short}`))) : null,
+      (() => { const lid = !S.ch.complete[u] && lessonForUnit(u); return lid ? h("button", { class: "notif lesson-card", onclick: () => playLesson(lid, () => home()) }, h("div", { class: "app-ic", "aria-hidden": "true" }, "🎓"), h("div", { class: "nt" }, h("b", null, `Clase: ${LESSONS[lid].title}`), h("span", null, `2–3 min with Profesor Churro · makes ${loc.short} easier`))) : null; })(),
       prove ? h("button", { class: "notif prove", onclick: () => proveIntro(u) }, h("div", { class: "app-ic", "aria-hidden": "true" }, "⚡"), h("div", { class: "nt" }, h("b", null, "Already know this? Prove it"), h("span", null, `${PROVE_N} typed questions · ${PROVE_PASS} right skips ${loc.short}`))) : null,
       h("div", { class: "chapter-card" },
         h("div", { class: "ch-top" }, h("span", { class: "ch-emoji", "aria-hidden": "true" }, UNITS[u - 1].emoji), h("div", null, h("div", { class: "ch-n" }, allDone ? "Every chapter in this version is done!" : `Capítulo ${u} · ${loc.name}`), h("div", { class: "ch-t" }, UNITS[u - 1].topic))),
@@ -3015,6 +3080,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         h("h1", { tabindex: "-1" }, `${r.right}/${PROVE_N} — ${r.pass ? "proven! ⚡" : "not this time"}`),
         h("p", { class: "lead center" }, r.pass ? `${locOf(u).name} complete! ${u < UNITS.length ? `${locOf(u + 1).name} is unlocked on the map.` : ""} ${S.puzzles[u] ? "" : `Ana's puzzle at ${locOf(u).short} is still waiting for you 🧩`}` : `You knew ${r.right} of them — those are locked in. The rest are now in your practice. Try again tomorrow, or beat the boss the normal way.`),
         h("p", { class: "center xp-line" }, `+${(res.xp || 0) + (r.pass ? XP.prove : 0)} XP`),
+        !r.pass ? h("button", { class: "btn big lesson-offer", onclick: () => { const lid = Object.keys(LESSONS).find(id => LESSONS[id].units.includes(u)); playLesson(lid, fin => { if (fin) { delete S.proveTry[u]; save(); toast("You can try Prove it again today ⚡"); } home(); }); } }, "🎓 Take the Clase → try again today") : null,
         h("button", { class: "btn primary big", onclick: home, autofocus: true }, "Back to the map 🗺️")));
     } });
   }
@@ -3233,7 +3299,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         const res = check(v, it, { noClose: strict() });
         if (res.r === "close" && !hintState.retry) { hintState.retry = true; hb.hidden = false; hb.innerHTML = "👀 So close — check the ending (o/a, s, verb ending) and try once more."; input.select(); return; }
         if (res.r === "article" && !hintState.retry) { hintState.retry = true; hb.hidden = false; hb.innerHTML = "Add the article (<b>el</b> / <b>la</b>…) — it shows the gender, and teachers count it."; input.focus(); return; }
-        let outcome = res.r === "ok" ? "ok" : (res.r === "accent" || res.r === "typo") ? "accent" : (res.r === "close" || res.r === "article") ? "wrong" : "wrong";
+        let outcome = res.r === "ok" ? "ok" : res.r === "gist" ? "gist" : (res.r === "accent" || res.r === "typo") ? "accent" : (res.r === "close" || res.r === "article") ? "wrong" : "wrong";
         if (outcome === "wrong" && !hintState.retry && R.mode === "normal" && !R.tamal && S.animals.includes("perro")) {
           R.tamal = true; hintState.retry = true; hb.hidden = false;
           hb.innerHTML = `<span class="inline-art">${ART.svg("perro", { expr: "happy", size: 30 })}</span> Tamal sniffs your answer… something's off. Free second chance — try again!`;
@@ -3304,7 +3370,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     function resolve(e, it, lv, outcome, input, res) {
       tick();
       const countable = R.mode === "place" || R.mode === "bonus" || R.mode === "prove" ? false : R.mode === "cp" ? e.countable : e.countable !== false;
-      const correct = ["ok", "accent", "retryok", "hint"].includes(outcome) && !(outcome === "accent" && S.settings.strict);
+      const correct = ["ok", "accent", "retryok", "hint", "gist"].includes(outcome) && !((outcome === "accent" || outcome === "gist") && S.settings.strict);
       if (R.mode !== "place") {
         const r = record(e.id, outcome, { lv, countable });
         if (r.leveled) R.leveled.add(e.id);
@@ -3312,7 +3378,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       R.n++; if (correct) R.correct++; else R.missed.push(e.id);
       R.results.push({ id: e.id, ok: correct && outcome !== "hint" });
       bumpRuns(correct);
-      const xpg = outcome === "ok" ? (lv === 3 ? XP.unaided : XP.scaffold) : outcome === "accent" ? (lv === 3 && !S.settings.strict ? XP.accent : XP.scaffold) : (outcome === "hint" || outcome === "retryok") ? XP.helped : XP.effort;
+      const xpg = outcome === "gist" ? 5 : outcome === "ok" ? (lv === 3 ? XP.unaided : XP.scaffold) : outcome === "accent" ? (lv === 3 && !S.settings.strict ? XP.accent : XP.scaffold) : (outcome === "hint" || outcome === "retryok") ? XP.helped : XP.effort;
       gainXP(R.mode === "bonus" ? Math.ceil(xpg / 2) : xpg, R);
       updMeter();
       save();
@@ -3320,7 +3386,18 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       if (input && lv > 1) chat.add(bubble({ f: "me", es: input }));
       const ans = answerText(it);
       let html, ok = correct;
-      if (outcome === "ok") html = praise() + (lv > 1 && norm(input) !== norm(ans) && it.t === "s" ? `<div class="also">Also natural: <span lang="es">${esc(ans)}</span></div>` : "");
+      if (outcome === "gist" && correct) {
+        const pat = it.pats.map(p => fill(p)).find(p => norm(p) === res.match) || ans;
+        const miss = new Set((res.missing || []).map(w => strip(norm(w)))), endw = new Set((res.endings || []).map(e => strip(norm(e[0]))));
+        const shown = cap(pat).split(" ").map(w => { const k = strip(norm(w)); return miss.has(k) ? `<ins>${esc(w)}</ins>` : endw.has(k) ? `<mark>${esc(w)}</mark>` : esc(w); }).join(" ");
+        const notes = [];
+        if ((res.missing || []).length) notes.push(`add the little word${res.missing.length > 1 ? "s" : ""} <b lang="es">${esc(res.missing.join(", "))}</b>`);
+        if ((res.endings || []).length) notes.push(res.endings.map(([w, g]) => `<b lang="es">${esc(g)}</b> → <b lang="es">${esc(w)}</b>`).join(", "));
+        if ((res.extra || []).length) notes.push(`drop <b lang="es">${esc(res.extra.join(", "))}</b>`);
+        if (res.reordered) notes.push("check the word order");
+        html = `<b>¡Se entiende! ✓</b> A Spanish speaker would understand you. To make it perfect: ${notes.join(" · ")}<div class="correct gist" lang="es">${shown}</div><div class="small">Counts toward the chapter. It'll come back so you can nail it.</div>`;
+      }
+      else if (outcome === "ok") html = praise() + (lv > 1 && norm(input) !== norm(ans) && it.t === "s" ? `<div class="also">Also natural: <span lang="es">${esc(ans)}</span></div>` : "");
       else if (outcome === "accent" || (S.settings.strict && res && (res.r === "accent" || res.r === "typo"))) {
         const parts = [];
         if (res.words && res.words.length) parts.push(`accents → <b lang="es">${esc(res.words.join(", "))}</b>`);
@@ -3430,6 +3507,12 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       return { kind: "accent", key: k, word: w };
     }
     if (res && res.r === "typo") return { kind: "spell", key: "spell", word: (res.words || [want])[0] };
+    if (res && res.r === "gist") {
+      const e = (res.endings || [])[0];
+      if (e) { const fw = formOf(e[0]), fg = formOf(e[1]); if (fw && fg && fw.verb === fg.verb) return { kind: "conj", key: conjKey(fw.verb, fw.p), verb: fw.verb, p: fw.p, gotP: fg.p }; if (/[oa]s?$/.test(strip(e[0]))) return { kind: "agree", key: "agree", want: e[0], got: e[1] }; }
+      if (base.u === 2 && !res.reordered) return { kind: "frames", key: "frames" };
+      return { kind: res.reordered ? "order" : "smallwords", key: res.reordered ? "order" : "smallwords" };
+    }
     if (it.t === "j") return { kind: "conj", key: conjKey(it.verb, it.p), verb: it.verb, p: it.p, gotP: res && res.otherForm };
     const ww = strip(want).split(" "), gw = strip(got).split(" ");
     const wwRaw = want.split(" ");
@@ -3450,6 +3533,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     if (tag === "gustar") return { kind: "gustar", key: "gustar" };
     if (tag === "art") return { kind: "article", key: "article", want: wwRaw[0] };
     if (tag === "agree") return { kind: "agree", key: "agree", want: wwRaw[wwRaw.length - 1] };
+    if ((it.t === "s" || it.t === "l") && base.u === 2) return { kind: "frames", key: "frames" };
+    if ((it.t === "s" || it.t === "l") && /^¿/.test(ansT(base))) return { kind: "preguntas", key: "accent-q" };
     if (it.t === "c") { const m = (it.s || "").match(/\((\w+)\)/); if (m && VERBS[m[1]]) { const p = VERBS[m[1]].f.indexOf(want); if (p >= 0) return { kind: "conj", key: conjKey(m[1], p), verb: m[1], p, gotP: (formOf(got) || {}).p }; } }
     return { kind: "vocab", key: "vocab" };
   }
@@ -3457,7 +3542,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
   const PERS_SHORT = ["yo", "tú", "él/ella/usted", "nosotros", "ellos/ustedes"];
   function tipTitle(key) {
     if (key.startsWith("conj-")) { const [, t, p] = key.split("-"); if (VERBS[t]) return `${t}: the irregular one`; return `-${t} verbs · ${PERS_SHORT[p]} → -${ENDINGS[t][p]}`; }
-    return ({ punct: "Upside-down ¿ ¡", "accent-q": "Question words wear accents", "accent-si": "sí vs. si", "accent-tu": "tú vs. tu", "accent-el": "él vs. el", "accent-esta": "está vs. esta", accent: "Accents = the loud syllable", spell: "Spell it by syllables", serestar: "Ser vs. estar (DOCTOR / PLACE)", gustar: "gusta vs. gustan", article: "el / la / un / una", agree: "Make adjectives match", vocab: "Making a word stick" })[key] || key;
+    return ({ punct: "Upside-down ¿ ¡", "accent-q": "Question words wear accents", "accent-si": "sí vs. si", "accent-tu": "tú vs. tu", "accent-el": "él vs. el", "accent-esta": "está vs. esta", accent: "Accents = the loud syllable", frames: "Dates, time & age frames", smallwords: "Spanish needs the little words", order: "Word order", spell: "Spell it by syllables", serestar: "Ser vs. estar (DOCTOR / PLACE)", gustar: "gusta vs. gustan", article: "el / la / un / una", agree: "Make adjectives match", vocab: "Making a word stick" })[key] || key;
   }
   function tipRule(key) {
     if (key.startsWith("conj-")) { const [, t, p] = key.split("-"); if (VERBS[t]) return VERBS[t].tip; return `Drop -${t}, add the ending. ${PERS_SHORT[p]} always ends in -${ENDINGS[t][p]}.`; }
@@ -3468,6 +3553,9 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       "accent-tu": "tú (with accent) = you. tu (no accent) = your.",
       "accent-el": "él (with accent) = he. el (no accent) = the.",
       "accent-esta": "está / estás / están come from estar and carry an accent. esta (no accent) = this.",
+      frames: "Dates: el + number + de + month. Time: Es la una / Son las… Age: Tengo ___ años.",
+      smallwords: "Spanish keeps little words English drops: el / la with nouns, de for “of / from,” a for “at / to.”",
+      order: "Describing words go after the noun (la casa grande), and no goes right before the verb.",
       accent: "The accent marks the syllable you say loudest. Say it slowly — the accented part pops.",
       spell: "Break it into syllables, hear each one, then type it in chunks.",
       serestar: "SER = what something IS (Description, Occupation, Characteristic, Time, Origin, Relationship). ESTAR = how or where it is (Position, Location, Action, Condition, Emotion).",
@@ -3508,6 +3596,10 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       box.append(h("div", { class: "syl" }, syl.map((s, i) => h("span", { class: /[áéíóú]/.test(s) ? "stress" : "", style: `animation-delay:${0.3 * i}s`, lang: "es" }, s))));
       box.append(h("div", { class: "center" }, h("button", { class: "btn", onclick: () => speak(word, 0.55) }, "🐢 Hear it slowly")));
       setTimeout(() => speak(word, 0.55), 500);
+    } else if (t.kind === "frames") {
+      box.append(frameEl(["Hoy es", "el", "[número]", "de", "[mes]"]), frameEl(["Son", "las", "[número]"]), frameEl(["Tengo", "[número]", "años"]));
+    } else if (t.kind === "smallwords" || t.kind === "order") {
+      box.append(t.kind === "order" ? frameEl(["la casa", "grande"]) : frameEl(["el libro", "de", "Ana"]), frameEl(["No", "hablo", "francés"]));
     } else if (t.kind === "punct") {
       box.append(h("div", { class: "punct-vis", lang: "es" }, h("span", { class: "flip" }, "¿"), "Cómo estás", h("span", null, "?"), h("br"), h("span", { class: "flip" }, "¡"), "Qué padre", h("span", null, "!")));
     } else {
@@ -3574,6 +3666,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         if (ok) { gainXP(TIP_XP, R); fb.innerHTML = `<div class="tip-ok">${profSvg("wow", 64)}<div><b>¡Exacto! +${TIP_XP} XP</b><br>Truco saved to your Apuntes 📒</div></div>`; }
         else fb.innerHTML = `Not quite — it's <b lang="es">${esc(ansT(prac))}</b>. No stress, it's coming back in your practice.`;
         go.textContent = "Back to the game →"; go.focus(); save();
+        const lid = TIP_TO_LESSON(t.key);
+        if (lid && !S.lessons[lid]) fb.append(h("button", { class: "btn lesson-offer", onclick: () => { wrap.remove(); playLesson(lid, () => done()); } }, `🎓 Want the 2-minute Clase: ${LESSONS[lid].title}?`));
       };
       go.onclick = check1; inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); check1(); } });
       setTimeout(() => inp.focus(), 60);
@@ -3594,6 +3688,113 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
   function tipsList() {
     const t = S.tips || {};
     return Object.entries(t).sort((a, b) => b[1].n - a[1].n);
+  }
+
+  /* ================================================================
+     CLASES DE CHURRO — short lessons on the big patterns
+     ================================================================ */
+  const LESSON_XP = 30;
+  const LESSONS = {
+    frames: { e: "🗓️", title: "Dates, time & age: sentence frames", es: "Fechas, hora y edad", units: [2], cards: [
+      { h: "Dates: el + number + de + month", frame: ["Hoy es", "el", "[número]", "de", "[mes]"], ex: [["Hoy es el dos de mayo.", "Today is May 2nd."], ["Mi cumpleaños es el quince de marzo.", "My birthday is March 15th."]], note: "The day comes first, and you need BOTH little words: el … de. The 1st is “el primero.” Months are lowercase." },
+      { h: "Time: Es la una / Son las…", frame: ["Son", "las", "[número]", "(y media / y cuarto)"], ex: [["Es la una.", "It's 1:00."], ["Son las tres y media.", "It's 3:30."], ["La clase es a las ocho.", "Class is at 8:00."]], note: "One o'clock is singular (Es la una). Every other hour is plural (Son las…). “At” a time = a las." },
+      { h: "Age: Tengo ___ años", frame: ["Tengo", "[número]", "años"], ex: [["Tengo cuarenta años.", "I'm 40."], ["¿Cuántos años tienes?", "How old are you?"]], note: "Spanish HAS years: tener, never ser. “Soy cuarenta” sounds like you're claiming to be the number 40." }],
+      practice: [
+        { ask: "Today is March 3rd.", a: ["Hoy es el [tres|3] de marzo."] },
+        { ask: "It's 2:30.", a: ["Son las dos y [media|treinta]."] },
+        { ask: "I'm 40 years old.", a: ["Tengo [cuarenta|40] años."] },
+        { ask: "The party is at nine.", a: ["La fiesta es a las nueve."] }] },
+    orden: { e: "🧩", title: "Word order & the little words", es: "El orden de las palabras", units: [1, 3, 4, 5], cards: [
+      { h: "Describing words go AFTER the noun", frame: ["la casa", "grande"], ex: [["la casa grande", "the big house"], ["un perro pequeño", "a small dog"]], note: "English says “big house.” Spanish says “house big.”" },
+      { h: "No goes right before the verb", frame: ["No", "hablo", "francés"], ex: [["No hablo francés.", "I don't speak French."], ["No me gusta correr.", "I don't like to run."]], note: "No “do / don't” in Spanish — just put no in front of the verb." },
+      { h: "Spanish needs the little words", frame: ["el libro", "de", "Ana"], ex: [["el libro de Ana", "Ana's book"], ["Me gusta la pizza.", "I like pizza."], ["Soy de Oregón.", "I'm from Oregon."]], note: "English drops “the” in general statements and uses ’s — Spanish keeps el / la and uses de (of / from)." }],
+      practice: [
+        { ask: "the red book", a: ["el libro rojo"] },
+        { ask: "I don't speak French.", a: ["[Yo |]no hablo francés."] },
+        { ask: "Ana's book", a: ["el libro de Ana"] },
+        { ask: "I like pizza.", a: ["[A mí |]me gusta la pizza."] }] },
+    preguntas: { e: "❓", title: "Question words", es: "Las palabras interrogativas", units: [1, 2], cards: [
+      { h: "The question words (always with an accent)", table: [["¿Qué?", "What?"], ["¿Cómo?", "How?"], ["¿Cuál?", "Which? / What (is your…)?"], ["¿Dónde?", "Where?"], ["¿Cuándo?", "When?"], ["¿Cuántos? / ¿Cuántas?", "How many?"], ["¿Quién?", "Who?"], ["¿Por qué?", "Why?"]], note: "Questions open with ¿ and close with ?" },
+      { h: "Qué vs. Cuál for “what”", ex: [["¿Qué hora es?", "What time is it?"], ["¿Cuál es tu nombre?", "What is your name?"], ["¿Cuál es la fecha de hoy?", "What's today's date?"]], note: "Before es (is), Spanish usually uses ¿Cuál es…? for “What is…?” — names, dates, numbers." },
+      { h: "Question word first, then the verb", frame: ["¿De dónde", "eres", "?"], ex: [["¿De dónde eres?", "Where are you from?"], ["¿Cuántos años tienes?", "How many years do you have? = How old are you?"]], note: "Little words like de stick to the front: ¿De dónde…? = From where…?" }],
+      practice: [
+        { ask: "Where are you from? (to a friend)", a: ["¿De dónde eres?"] },
+        { ask: "What time is it?", a: ["¿Qué hora es?"] },
+        { ask: "What's today's date?", a: ["¿Cuál es la fecha de hoy?", "¿Qué fecha es hoy?"] },
+        { ask: "How old are you? (to a friend)", a: ["¿Cuántos años tienes?"] }] },
+    verbos: { e: "✍️", title: "Verb conjugation basics", es: "Cómo conjugar verbos", units: [3, 6], cards: [
+      { h: "The infinitive = “to ___”", ex: [["hablar", "to speak"], ["comer", "to eat"], ["vivir", "to live"]], note: "Every infinitive ends in -ar, -er or -ir. To use it in a sentence, you swap that ending for one that says WHO is doing it." },
+      { h: "Drop the ending, add who's doing it", table: [["yo", "habl-o · com-o · viv-o"], ["tú", "habl-as · com-es · viv-es"], ["él / ella / usted", "habl-a · com-e · viv-e"], ["nosotros", "habl-amos · com-emos · viv-imos"], ["ellos / ustedes", "habl-an · com-en · viv-en"]], note: "-er and -ir are twins except for nosotros (-emos vs. -imos)." },
+      { h: "A few rebels: memorize them", table: [["ser", "soy · eres · es · somos · son"], ["estar", "estoy · estás · está · estamos · están"], ["tener", "tengo · tienes · tiene · tenemos · tienen"]], note: "The ending also tells you who — so “Hablo” alone already means “I speak.”" }],
+      practice: [
+        { ask: "hablar → nosotros (we speak)", a: ["[nosotros |]hablamos"] },
+        { ask: "comer → tú (you eat)", a: ["[tú |]comes"] },
+        { ask: "vivir → ellos (they live)", a: ["[ellos |]viven"] },
+        { ask: "tener → yo (I have)", a: ["[yo |]tengo"] }] },
+    genero: { e: "⚖️", title: "Gender & articles", es: "El género y los artículos", units: [3, 4], cards: [
+      { h: "Every noun is masculine or feminine", table: [["el / un", "masculine — el libro, un perro"], ["la / una", "feminine — la casa, una mesa"], ["los / las", "plural — los libros, las casas"]], note: "Most -o words are masculine, most -a words feminine. Watch out: el día, la mano." },
+      { h: "Describing words match the noun", ex: [["el chico alto", "the tall boy"], ["la chica alta", "the tall girl"], ["los chicos altos", "the tall boys"]], note: "Adjectives copy the noun: -o / -a, and add -s for plural. Ending in -e? It stays the same: inteligente." }],
+      practice: [
+        { ask: "the house", a: ["la casa"] },
+        { ask: "a book", a: ["un libro"] },
+        { ask: "the girls", a: ["las chicas"] },
+        { ask: "the tall boy", a: ["el chico alto"] }] }
+  };
+  const TIP_TO_LESSON = k => k === "frames" ? "frames" : (k === "smallwords" || k === "order") ? "orden" : k.startsWith("conj") ? "verbos" : (k === "article" || k === "agree") ? "genero" : (k === "accent-q" || k === "punct") ? "preguntas" : null;
+  function lessonForUnit(u) { return Object.keys(LESSONS).find(id => LESSONS[id].units.includes(u) && !(S.lessons || {})[id]) || null; }
+  function frameEl(parts) { return h("div", { class: "frame" }, parts.map((p, i) => h("span", { class: /^\[|^\(/.test(p) ? "slot" : "fixed", style: `animation-delay:${0.2 * i}s`, lang: "es" }, p.replace(/^\[|\]$/g, "")))); }
+  window.LESSONS_DBG = LESSONS;
+  function playLesson(id, done) {
+    const L = LESSONS[id]; S.lessons = S.lessons || {};
+    const wrap = h("div", { class: "tip-sheet lesson", role: "dialog", "aria-label": "Clase: " + L.title });
+    const card = h("div", { class: "tip-card" }); const add = (...xs) => card.append(...xs.filter(x => x != null && x !== false)); wrap.append(card); $("#phone").append(wrap);
+    const steps = L.cards.length + L.practice.length + 1; let k = 0, right = 0;
+    const head = (expr, kicker, title) => h("div", { class: "tip-head" }, h("div", { class: "tip-prof", html: profSvg(expr, 86) }), h("div", null, h("div", { class: "tip-kicker" }, kicker), h("b", null, title)));
+    const dots = () => h("div", { class: "tip-dots" }, Array.from({ length: steps }, (_, j) => h("i", { class: j === k ? "on" : "" })));
+    function render() {
+      card.innerHTML = "";
+      if (k < L.cards.length) {
+        const c = L.cards[k];
+        add(head(k === 0 ? "happy" : "normal", `🎓 Clase · ${L.e} ${L.es}`, c.h),
+          c.frame ? frameEl(c.frame) : null,
+          c.table ? h("table", { class: "tip-conj lesson-table" }, c.table.map(([a, b], i) => h("tr", { style: `animation-delay:${0.1 * i}s` }, h("td", { lang: "es" }, h("b", null, a)), h("td", null, b)))) : null,
+          c.ex ? h("div", { class: "lesson-ex" }, c.ex.map(([es, en]) => h("div", { class: "lx" }, h("div", null, h("b", { lang: "es" }, es), h("small", null, en)), audioBtn(es)))) : null,
+          c.note ? h("p", { class: "tip-rule" }, c.note) : null,
+          h("div", { class: "tip-btns" }, h("button", { class: "btn ghost", onclick: close }, "Later"), dots(), h("button", { class: "btn primary", onclick: () => { k++; render(); } }, k === L.cards.length - 1 ? "Practice →" : "Next →")));
+        if (c.ex) setTimeout(() => speak(c.ex[0][0]), 400);
+      } else if (k < L.cards.length + L.practice.length) {
+        const q = L.practice[k - L.cards.length];
+        const it = { id: "lesson-" + id + k, t: "s", u: 0, en: q.ask, a: q.a, pats: q.a.flatMap(expand) }; it.canonRaw = it.pats[0];
+        const inp = textInput("Escribe en español…"), fb = h("div", { class: "tip-fb", "aria-live": "polite" });
+        let tried = false;
+        const go = h("button", { class: "btn primary" }, "Check");
+        const check1 = () => {
+          if (tried) { k++; return render(); }
+          if (!inp.value.trim()) { inp.focus(); return; }
+          tried = true; const r = check(inp.value, it); const ok = ["ok", "accent", "typo", "gist"].includes(r.r);
+          if (ok) right++;
+          fb.innerHTML = (ok ? `<div class="tip-ok">${profSvg(r.r === "ok" ? "wow" : "happy", 52)}<div><b>${r.r === "gist" ? "¡Se entiende! ✓" : "¡Eso! ✓"}</b>${r.r !== "ok" ? `<br>Exact form: <b lang="es">${esc(cap(fill(it.canonRaw)))}</b>` : ""}</div></div>` : `Almost — it's <b lang="es">${esc(cap(fill(it.canonRaw)))}</b> — you'll see this pattern again soon.`);
+          go.textContent = k === steps - 2 ? "Finish →" : "Next →"; go.focus();
+        };
+        go.onclick = check1; inp.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); check1(); } });
+        add(head("wow", `🎓 Práctica ${k - L.cards.length + 1}/${L.practice.length}`, "Say it in Spanish:"), h("div", { class: "tip-q" }, `“${q.ask}”`), inp, accentBar(inp), fb, h("div", { class: "tip-btns" }, h("span"), dots(), go));
+        setTimeout(() => inp.focus(), 60);
+      } else {
+        const first = !S.lessons[id]; S.lessons[id] = today(); if (first) gainXP(LESSON_XP); save();
+        add(head("happy", "🎓 Clase completa", `${L.title} ✓`), h("p", { class: "lead center" }, `${right} of ${L.practice.length} right${first ? ` · +${LESSON_XP} XP` : ""}`),
+          h("p", { class: "small center" }, "It's saved in Apuntes → Clases, so you can rewatch it anytime."),
+          h("div", { class: "tip-btns" }, h("span"), dots(), h("button", { class: "btn primary", onclick: () => close(true) }, "¡Vamos! →")));
+      }
+      const f = card.querySelector(".tip-btns .btn.primary"); if (f && k < L.cards.length) setTimeout(() => f.focus(), 60);
+    }
+    function close(finished) { wrap.remove(); done && done(finished === true); }
+    wrap.addEventListener("keydown", e => { if (e.key === "Escape") close(); });
+    render();
+  }
+  function lessonsSection() {
+    return h("details", { class: "note-unit clases", open: true }, h("summary", null, `🎓 Clases de Churro (${Object.keys(S.lessons || {}).length}/${Object.keys(LESSONS).length})`),
+      h("p", { class: "small" }, "2–3 minute lessons on the big patterns. Rewatch anytime."),
+      Object.entries(LESSONS).map(([id, L]) => h("button", { class: "lesson-row", onclick: () => playLesson(id, () => notesScreen()) }, h("span", { class: "lr-e" }, L.e), h("span", { class: "lr-t" }, h("b", null, L.title), h("small", { lang: "es" }, L.es)), h("span", { class: "small" }, (S.lessons || {})[id] ? "✓" : "▶"))));
   }
 
   /* ---------------- session summary ---------------- */
@@ -3660,7 +3861,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         h("h1", { tabindex: "-1" }, pass ? `${res.correct}/10 — ¡Ganaste! 🏆` : `${res.correct}/10 — so close`),
         h("div", { class: "msg them" }, avatar(CHARS["boss" + u]), h("div", { class: "bub es tappable", onclick: e => { const t = e.currentTarget.querySelector(".tr"); t.hidden = !t.hidden; } }, h("div", { lang: "es" }, line[0]), h("div", { class: "tr", hidden: true }, line[1]))),
         pass ? h("p", { class: "lead center" }, `${loc.name} ✔ ${S.puzzles[u] || !PUZZLES[u] ? `· Ana's list #${loc.n} checked off!` : "· Ana's puzzle here is still waiting 🧩"}${u < UNITS.length ? ` Next stop on the map: ${locOf(u + 1).name}.` : ""}`)
-          : h("p", { class: "lead center" }, "Keep doing normal sessions — the ones you missed come back first. Rematch tomorrow!"),
+          : h("div", null, h("p", { class: "lead center" }, "Take the quick Clase and you can rematch right away — or keep practicing and rematch tomorrow."),
+              h("button", { class: "btn big lesson-offer", onclick: () => { const lid = Object.keys(LESSONS).find(id => LESSONS[id].units.includes(u)); playLesson(lid, fin => { if (fin) { delete S.ch.cp[u].lastFail; save(); toast("Rematch unlocked! 🥊"); } home(); }); } }, "🎓 Take the Clase → rematch today")),
         pass ? h("p", { class: "center xp-line" }, `+${XP.boss + (res.xp || 0)} XP`) : null,
         h("button", { class: "btn primary big", onclick: home, autofocus: true }, "Back to the map 🗺️")));
     } });
@@ -3701,6 +3903,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     const units = UNITS.filter(u => u.id <= S.ch.unlocked);
     const body = h("div", { class: "pad" },
       units.map(u => h("details", { class: "note-unit", open: u.id === S.ch.unlocked ? true : null }, h("summary", null, `${u.emoji} Cap. ${u.id} · ${u.topic}`), h("div", { class: "note-embed", html: NOTES[u.id] }))),
+      lessonsSection(),
       h("details", { class: "note-unit trucos", open: tipsList().length ? true : null }, h("summary", null, `🎓 Trucos de Churro (${tipsList().length})`),
         tipsList().length ? h("div", null, h("p", { class: "small" }, "Tips Churro gave you when something kept tripping you up. Great for a quick review before a quiz."),
           tipsList().map(([k, v]) => h("div", { class: "truco" }, h("div", { class: "tr-ic", html: profSvg("happy", 44) }), h("div", null, h("b", null, tipTitle(k)), h("p", null, tipRule(k)))))) : h("p", { class: "small" }, "None yet. When you miss the same kind of thing a couple of times, Profesor Churro pops in with a quick tip — and it lands here.")),
