@@ -884,6 +884,92 @@ C(6, "A mí ___ me gusta correr. — A mí tampoco.", "no", "I don't like to run
 C(6, "¿Ustedes ___ la ventana? (abrir)", "abren", "Are you all opening the window?");
 C(6, "A mis padres ___ gusta cocinar.", "les", "My parents like to cook.", { tag: "gustar", d: ["le", "nos", "me"] });
 
+/* ---------------- UNIT 7 · Xochimilco (Spanish 2: boot verbs, ir a + infinitive, plans) ---------------- */
+UNITS.push({ id: 7, ch: "Planes", en: "Plans", topic: "Boot verbs, ir a + infinitive & making plans", sp: "vale", level: "S2", emoji: "🛶" });
+Object.assign(VERBS, {
+  querer: { en: "to want", f: ["quiero", "quieres", "quiere", "queremos", "quieren"], type: "irr", stem: "e→ie", tip: "Boot verb e→ie: quiero, quieres, quiere, quieren. Nosotros stays outside the boot: queremos." },
+  empezar: { en: "to begin / to start", f: ["empiezo", "empiezas", "empieza", "empezamos", "empiezan"], type: "irr", stem: "e→ie", tip: "Boot verb e→ie: empiezo, empiezas, empieza, empiezan. Nosotros stays outside the boot: empezamos." },
+  preferir: { en: "to prefer", f: ["prefiero", "prefieres", "prefiere", "preferimos", "prefieren"], type: "irr", stem: "e→ie", tip: "Boot verb e→ie (the SECOND e changes): prefiero, prefieres, prefiere, prefieren. Nosotros: preferimos." },
+  poder: { en: "can / to be able to", f: ["puedo", "puedes", "puede", "podemos", "pueden"], type: "irr", stem: "o→ue", tip: "Boot verb o→ue: puedo, puedes, puede, pueden. Nosotros stays outside the boot: podemos." },
+  dormir: { en: "to sleep", f: ["duermo", "duermes", "duerme", "dormimos", "duermen"], type: "irr", stem: "o→ue", tip: "Boot verb o→ue: duermo, duermes, duerme, duermen. Nosotros stays outside the boot: dormimos." },
+  volver: { en: "to return / to come back", f: ["vuelvo", "vuelves", "vuelve", "volvemos", "vuelven"], type: "irr", stem: "o→ue", tip: "Boot verb o→ue: vuelvo, vuelves, vuelve, vuelven. Nosotros stays outside the boot: volvemos." },
+  jugar: { en: "to play (a sport or game)", f: ["juego", "juegas", "juega", "jugamos", "juegan"], type: "irr", stem: "u→ue", tip: "Jugar is the only u→ue boot verb: juego, juegas, juega, juegan. Nosotros: jugamos." },
+  pedir: { en: "to ask for / to order", f: ["pido", "pides", "pide", "pedimos", "piden"], type: "irr", stem: "e→i", tip: "Boot verb e→i: pido, pides, pide, piden. Nosotros stays outside the boot: pedimos." },
+  ir: { en: "to go", f: ["voy", "vas", "va", "vamos", "van"], type: "irr", tip: "Ir is totally irregular: voy, vas, va, vamos, van. Add a + infinitive for plans: Voy a comer = I'm going to eat." }
+});
+V(7, "to want", "querer", "💭");
+V(7, "to go", "ir", "➡️");
+V(7, "can / to be able to", "poder", "💪");
+V(7, "to play (a sport or game)", "jugar", "⚽", { note: "Play a sport or game = jugar. Play an instrument = tocar." });
+J(7, "querer");
+J(7, "ir");
+S(7, "I want to go to Xochimilco.", ["Quiero ir a Xochimilco."], { tag: "boot" });
+C(7, "Yo ___ ir a Xochimilco. (querer)", "quiero", "I want to go to Xochimilco.", { tag: "boot", d: ["quero", "quieres", "queremos"] });
+S(7, "Do you want to come with me?", ["¿Quieres venir conmigo?"], { tag: "boot", sp: "vale" });
+S(7, "We're going to eat tacos.", ["Vamos a comer tacos."], { tag: "ira" });
+S(7, "I'm going to sleep.", ["Voy a dormir."], { tag: "ira" });
+C(7, "Mañana yo ___ a nadar. (ir)", "voy", "Tomorrow I'm going to swim.", { tag: "ira", d: ["va", "vas", "vamos"] });
+C(7, "Vamos ___ comer.", "a", "We're going to eat.", { tag: "ira", d: ["de", "que", "en"] });
+V(7, "tonight", "esta noche", "🌙");
+V(7, "this weekend", "este fin de semana", "📅");
+V(7, "next week", ["la próxima semana", "la semana que viene"], "🗓️");
+S(7, "What are you going to do this weekend?", ["¿Qué vas a hacer este fin de semana?"], { tag: "ira", sp: "mateo" });
+S(7, "Are you going to come?", ["¿Vas a venir?"], { tag: "ira" });
+S(7, "We're going to Xochimilco on Saturday.", ["Vamos a Xochimilco el sábado.", "El sábado vamos a Xochimilco."], { tag: "ira", note: "“On Saturday” = el sábado (no word for “on”)." });
+C(7, "¿Qué ___ a hacer tú? (ir)", "vas", "What are you going to do?", { tag: "ira", d: ["va", "voy", "van"] });
+J(7, "poder");
+J(7, "jugar");
+V(7, "with me", "conmigo", "🙋", { note: "Not “con mí” — Spanish fuses it into one word: conmigo." });
+V(7, "with you (friend)", "contigo", "🫵");
+S(7, "I can't go today.", ["Hoy no puedo ir.", "No puedo ir hoy."], { tag: "boot" });
+S(7, "Can you help me?", ["¿Puedes ayudarme?", "¿Me puedes ayudar?"], { tag: "boot" });
+S(7, "We can't go.", ["No podemos ir."], { tag: "boot", note: "Nosotros stays outside the boot: podemos." });
+S(7, "Diego plays soccer.", ["Diego juega [al |a |]fútbol."], { tag: "boot" });
+C(7, "Nosotros ___ ir mañana. (poder)", "podemos", "We can go tomorrow.", { tag: "boot", note: "Nosotros stays outside the boot: podemos, not “puedemos.”", d: ["puedemos", "pueden", "puedo"] });
+C(7, "¿___ venir conmigo? (poder, tú)", "Puedes", "Can you come with me?", { tag: "boot", d: ["Podes", "Puede", "Podemos"] });
+C(7, "Ellos ___ al fútbol. (jugar)", "juegan", "They play soccer.", { tag: "boot", d: ["jugan", "juega", "jugamos"] });
+V(7, "the game / match (sports)", ["el partido", "el partido de fútbol"], "🏟️", { art: 1, note: "A sports match = el partido. A board or video game = el juego." });
+V(7, "always", "siempre", "🔁");
+V(7, "never", "nunca", "🚫");
+V(7, "sometimes", "a veces", "🔀");
+S(7, "I never play video games.", ["Nunca juego [a los |a |]videojuegos.", "No juego [a los |a |]videojuegos nunca."], { tag: "boot" });
+S(7, "Sometimes I play the guitar.", ["A veces toco la guitarra.", "Toco la guitarra a veces."], { note: "An instrument uses tocar, not jugar." });
+V(7, "to have to (do something)", "tener que", "📌", { note: "Tener que + infinitive: Tengo que estudiar = I have to study." });
+S(7, "I have to study.", ["Tengo que estudiar."]);
+C(7, "Tengo ___ estudiar.", "que", "I have to study.", { d: ["a", "de", "en"] });
+V(7, "to ask for / to order (food)", "pedir", "🧾");
+V(7, "to prefer", "preferir", "👍");
+V(7, "the boat", ["la trajinera", "la lancha", "el barco"], "🛶", { art: 1, note: "In Xochimilco the colorful flat-bottomed boats are called trajineras." });
+V(7, "the canal", "el canal", "🌊", { art: 1 });
+V(7, "the flower", "la flor", "🌺", { art: 1, note: "Plural: las flores." });
+V(7, "lunch", ["el almuerzo", "la comida"], "🥪", { art: 1, note: "In Mexico the big afternoon meal is usually called la comida." });
+J(7, "pedir");
+J(7, "preferir");
+S(7, "I'm ordering the enchiladas.", ["Pido las enchiladas.", "Voy a pedir las enchiladas."], { tag: "boot" });
+S(7, "Gabriela orders a coffee.", ["Gabriela pide un café."], { tag: "boot" });
+C(7, "Yo ___ tacos. (pedir)", "pido", "I order tacos.", { tag: "boot", d: ["piden", "pide", "pedimos"] });
+S(7, "I prefer to read.", ["Prefiero leer."], { tag: "boot" });
+S(7, "Do you prefer the beach or the city?", ["¿Prefieres la playa o la ciudad?"], { tag: "boot" });
+C(7, "Ellas ___ leer. (preferir)", "prefieren", "They prefer to read.", { tag: "boot", d: ["preferen", "prefiere", "preferimos"] });
+V(7, "to return / to come back", ["volver", "regresar"], "↩️");
+V(7, "to begin / to start", ["empezar", "comenzar"], "🏁");
+V(7, "the movie", "la película", "🎬", { art: 1 });
+V(7, "later", ["más tarde", "luego"], "⏳");
+V(7, "early", "temprano", "🌅");
+J(7, "dormir");
+J(7, "volver");
+J(7, "empezar");
+S(7, "I sleep eight hours.", ["Duermo ocho horas."], { tag: "boot" });
+S(7, "Class starts at eight.", ["La clase [empieza|comienza] a las ocho."], { tag: "boot" });
+S(7, "The movie starts at seven.", ["La película [empieza|comienza] a las siete."], { tag: "boot" });
+S(7, "When are you coming back?", ["¿Cuándo [vuelves|regresas]?"], { tag: "boot" });
+S(7, "They want to swim.", ["[Ellos |Ellas |]quieren nadar."], { tag: "boot" });
+S(7, "How much does it cost?", ["¿Cuánto cuesta?"], { tag: "boot", note: "Costar is a boot verb too: cuesta (one thing), cuestan (more than one)." });
+S(7, "I don't understand.", ["No entiendo.", "No comprendo."], { tag: "boot", note: "Entender is a boot verb: entiendo, entiendes, entiende, entendemos, entienden." });
+C(7, "Tú ___ mucho. (dormir)", "duermes", "You sleep a lot.", { tag: "boot", d: ["dormes", "duerme", "dormimos"] });
+C(7, "La película ___ a las siete. (empezar)", "empieza", "The movie starts at seven.", { tag: "boot", d: ["empeza", "empiezan", "empezamos"] });
+C(7, "Nosotros ___ a casa a las seis. (volver)", "volvemos", "We come back home at six.", { tag: "boot", d: ["vuelvemos", "vuelven", "vuelvo"] });
+
 /* ---------------- Story scenes ---------------- */
 /* message: {f, es|en, tr?}. f="lucia" with en = plain English line.
    choice: {choice:[{es, tr, ok, r:{f,es|en,tr}}]} ; wrong options get Lucía's nudge */
@@ -1055,6 +1141,16 @@ const READINGS = {
       { q: "¿Cuándo está cerrada la avenida para los carros?", tr: "When is the avenue closed to cars?", o: ["Los domingos por la mañana", "Los lunes por la noche", "Nunca"], a: 0 },
       { q: "¿Qué hacen muchas personas?", tr: "What do many people do?", o: ["Duermen", "Corren, caminan o andan en bicicleta", "Comen pizza"], a: 1 },
       { q: "¿Qué le gusta hacer a Valeria?", tr: "What does Valeria like to do?", o: ["Cocinar", "Nadar", "Andar en bicicleta"], a: 2 }] }
+  ,7: { title: "Un domingo en Xochimilco", lines: [
+    ["Xochimilco está en el sur de la Ciudad de México.", "Xochimilco is in the south of Mexico City."],
+    ["Tiene muchos canales y trajineras de muchos colores.", "It has lots of canals and very colorful boats."],
+    ["Los domingos, muchas familias quieren pasear en trajinera.", "On Sundays, many families want to ride in a trajinera."],
+    ["En los canales puedes comer, escuchar mariachis y comprar flores.", "On the canals you can eat, listen to mariachis and buy flowers."],
+    ["Valeria prefiere ir temprano porque hay menos gente.", "Valeria prefers to go early because there are fewer people."]],
+    qs: [
+      { q: "¿Dónde está Xochimilco?", tr: "Where is Xochimilco?", o: ["En el norte de la ciudad", "En el sur de la ciudad", "En la playa"], a: 1 },
+      { q: "¿Qué puedes hacer en los canales?", tr: "What can you do on the canals?", o: ["Comer y escuchar mariachis", "Esquiar", "Jugar al béisbol"], a: 0 },
+      { q: "¿Por qué prefiere Valeria ir temprano?", tr: "Why does Valeria prefer to go early?", o: ["Porque hace calor", "Porque hay menos gente", "Porque duerme mucho"], a: 1 }] }
 };
 
 /* "Describe the picture" writing prompts (self-checked against a model) */
@@ -1064,6 +1160,7 @@ const WRITING = {
   3: { pic: "🎒 📚 ✏️ 🧮", prompt: "Describe what's in your backpack and what you study.", model: "En mi mochila hay un cuaderno, un lápiz y una calculadora. Estudio español y matemáticas.", check: ["Used hay (there is/are)", "Used un/una correctly (un cuaderno, una calculadora)", "Conjugated an -ar verb for yo (estudio)", "Languages written in lowercase"] },
   4: { pic: "👨‍👩‍👧 🐈", prompt: "Describe a family member or a pet: name, age, and two personality traits.", model: "Mi gato se llama Churro. Tiene tres años. Es perezoso y muy simpático.", check: ["Used se llama for the name", "Used TENER for age", "Used SER for personality", "Adjectives match gender (simpático/simpática)"] },
   5: { pic: "🏠 😴 📚", prompt: "Say where you are right now, how you feel, and describe the place.", model: "Estoy en casa. Estoy cansada pero contenta. Mi casa es grande y bonita.", check: ["Used ESTAR for location", "Used ESTAR for feelings", "Used SER to describe what the place is like", "Adjectives match gender"] },
+  7: { pic: "🛶 🌺 🌮 📅", prompt: "Make a plan: say what you want to do this weekend, one thing you're going to do, and one thing you have to do.", model: "Este fin de semana quiero ir a Xochimilco. Voy a comer tacos con mis amigos. Tengo que estudiar el domingo.", check: ["Used quiero + infinitive (boot verb: quiero, not quero)", "Used voy a + infinitive for a plan", "Used tengo que + infinitive", "Used a time word (este fin de semana, mañana, el sábado…)"] },
   6: { pic: "🎸 🎤 🚲 😴", prompt: "Say two things you like to do on weekends and one thing you don't.", model: "Los fines de semana me gusta escuchar música y andar en bicicleta. No me gusta correr.", check: ["Used me gusta + infinitive", "Used no me gusta for the negative", "Used los fines de semana", "Used gustan only with plural nouns"] }
 };
 
@@ -1086,6 +1183,9 @@ const FOTOS = [
   { u: 5, e: "💜", es: "Jacarandas", en: "Every spring, jacaranda trees turn Mexico City's streets purple." },
   { u: 6, e: "🚲", es: "Domingo en Reforma", en: "On Sunday mornings, part of Paseo de la Reforma closes to cars so people can bike, run and skate." },
   { u: 6, e: "🎺", es: "Plaza Garibaldi", en: "Plaza Garibaldi is famous for mariachi bands you can hire to play a song on the spot." },
+  { u: 7, e: "🛶", es: "Trajineras", en: "Each trajinera in Xochimilco has a name painted in bright letters on its arch — often a woman's name." },
+  { u: 7, e: "🦎", es: "El ajolote", en: "Axolotls are critically endangered in the wild; local farmers in Xochimilco help protect them with traditional chinampa farming." },
+  { u: 7, e: "🌽", es: "Las chinampas", en: "Chinampas are 'floating gardens' — farm plots built in the lake by the Aztecs, still used in Xochimilco today." },
   { u: 6, e: "🤼", es: "Lucha libre", en: "Masked lucha libre wrestling at Arena México is half sport, half theater, all chaos." }
 ];
 
@@ -1137,7 +1237,19 @@ const NOTES = {
 <p><b>A mí también</b> = me too · <b>A mí tampoco</b> = me neither</p>
 <h3>-er and -ir verbs</h3><table><tr><th></th><th>comer</th><th>vivir</th></tr><tr><td>yo</td><td>com<b>o</b></td><td>viv<b>o</b></td></tr><tr><td>tú</td><td>com<b>es</b></td><td>viv<b>es</b></td></tr><tr><td>él / ella / usted</td><td>com<b>e</b></td><td>viv<b>e</b></td></tr><tr><td>nosotros</td><td>com<b>emos</b></td><td>viv<b>imos</b></td></tr><tr><td>ellos / ustedes</td><td>com<b>en</b></td><td>viv<b>en</b></td></tr></table>
 <p>-er and -ir are twins — they only differ in nosotros (<b>-emos</b> vs. <b>-imos</b>).</p>
-<h3>Tocar vs. jugar</h3><p><b>tocar</b> an instrument (tocar la guitarra) · <b>jugar</b> a game or sport (jugar videojuegos)</p>`
+<h3>Tocar vs. jugar</h3><p><b>tocar</b> an instrument (tocar la guitarra) · <b>jugar</b> a game or sport (jugar videojuegos)</p>`,
+  7: `<h3>Boot verbs (stem-changing verbs)</h3><p>Some verbs change the vowel in their stem in every form <b>except nosotros</b>. Draw a boot around the forms that change:</p>
+<table><tr><th></th><th>e→ie<br>querer</th><th>o→ue<br>poder</th><th>e→i<br>pedir</th><th>u→ue<br>jugar</th></tr>
+<tr><td>yo</td><td>qu<b>ie</b>ro</td><td>p<b>ue</b>do</td><td>p<b>i</b>do</td><td>j<b>ue</b>go</td></tr>
+<tr><td>tú</td><td>qu<b>ie</b>res</td><td>p<b>ue</b>des</td><td>p<b>i</b>des</td><td>j<b>ue</b>gas</td></tr>
+<tr><td>él / ella / usted</td><td>qu<b>ie</b>re</td><td>p<b>ue</b>de</td><td>p<b>i</b>de</td><td>j<b>ue</b>ga</td></tr>
+<tr><td>nosotros</td><td>queremos</td><td>podemos</td><td>pedimos</td><td>jugamos</td></tr>
+<tr><td>ellos / ustedes</td><td>qu<b>ie</b>ren</td><td>p<b>ue</b>den</td><td>p<b>i</b>den</td><td>j<b>ue</b>gan</td></tr></table>
+<p>More: e→ie <i>empezar, preferir, entender, pensar</i> · o→ue <i>dormir, volver, costar, almorzar</i> · e→i <i>servir, repetir</i>. The endings stay regular — only the stem changes.</p>
+<h3>Ir + a + infinitive = the near future</h3><table><tr><td>yo</td><td>voy</td><td>nosotros</td><td>vamos</td></tr><tr><td>tú</td><td>vas</td><td>ellos / ustedes</td><td>van</td></tr><tr><td>él / ella / usted</td><td>va</td><td></td><td></td></tr></table>
+<p><i>Voy a estudiar.</i> = I'm going to study. <i>¿Qué vas a hacer?</i> = What are you going to do? Don't forget the <b>a</b>.</p>
+<h3>Verb + infinitive</h3><p>After querer, poder, preferir and tener que, the second verb stays in the infinitive: <i>Quiero comer. Puedo ir. Tengo que trabajar.</i></p>
+<h3>Conmigo / contigo</h3><p>with me = <b>conmigo</b> · with you = <b>contigo</b> (one word each).</p>`
 };
 
 const CONTENT = { CHARS, UNITS, ITEMS, VERBS, PERSONS, SCENES, MYSTERY, READINGS, WRITING, FOTOS, SLANG, NOTES };
@@ -1154,6 +1266,8 @@ if (typeof module !== "undefined") module.exports = CONTENT;
   C.CHARS.tamal = { name: "Tamal", art: "perro", color: "#f6dcb3", role: "the market dog" };
   C.CHARS.chucho = { name: "Don Chucho", av: "🍉", color: "#2e7d32", role: "fruit vendor" };
   C.CHARS.paz = { name: "Doña Paz", av: "👵🏽", color: "#6d4c41", role: "the neighbor" };
+  C.CHARS.ajo = { name: "Ajo", art: "ajolote", color: "#f7a8c4", role: "an axolotl" };
+  C.CHARS.beto = { name: "Don Beto", av: "🛶", color: "#00796b", role: "trajinera captain" };
   C.CHARS.ana = { name: "Ana", av: "✉️", color: "#e5006e", role: "the last exchange student" };
 
   // Map locations — one per chapter (unit). 7–9 are teased for the full build.
@@ -1164,7 +1278,7 @@ if (typeof module !== "undefined") module.exports = CONTENT;
     { id: 4, n: 4, u: 4, name: "La Casa Azul", area: "Coyoacán", short: "Casa Azul", x: 196, y: 276, animal: "xolo" },
     { id: 5, n: 5, u: 5, name: "Bosque de Chapultepec", area: "Chapultepec", short: "Chapultepec", x: 96, y: 200, animal: "chapulin" },
     { id: 6, n: 6, u: 6, name: "Plaza Garibaldi", area: "Centro", short: "Garibaldi", x: 200, y: 98, animal: "loro" },
-    { id: 7, n: 7, u: null, name: "Xochimilco", area: "Xochimilco", short: "Xochimilco", x: 258, y: 414, animal: "ajolote", soon: true },
+    { id: 7, n: 7, u: 7, name: "Xochimilco", area: "Xochimilco", short: "Xochimilco", x: 258, y: 414, animal: "ajolote" },
     { id: 8, n: 8, u: null, name: "Teotihuacán", area: "Estado de México", short: "Teotihuacán", x: 300, y: 70, animal: "serpiente", soon: true, s2: true },
     { id: 9, n: 9, u: null, name: "El Zócalo", area: "Centro", short: "Zócalo", x: 236, y: 168, animal: "colibri", soon: true, s2: true }
   ];
@@ -1200,6 +1314,7 @@ if (typeof module !== "undefined") module.exports = CONTENT;
     3: { name: "Profe Ramírez", av: "👨🏽‍🏫", who: "pop quiz time", meter: "Calificación", intro: ["Saquen una hoja. Examen sorpresa. 📝", "Take out a sheet of paper. Pop quiz."], win: ["¡Excelente trabajo! 👏", "Excellent work!"], lose: ["Hay que estudiar un poco más. Mañana otra vez.", "A little more studying. Again tomorrow."] },
     4: { name: "La guía del museo", av: "👩🏽‍🎨", who: "the museum guide at the Casa Azul", meter: "Pase VIP", intro: ["Bienvenida a la Casa Azul. ¿Lista para hablar de familias?", "Welcome to the Blue House. Ready to talk about families?"], win: ["¡Bravo! Eres una experta.", "Bravo! You're an expert."], lose: ["Casi. Puedes volver mañana.", "Almost. You can come back tomorrow."] },
     5: { name: "El metro en hora pico", av: "🚇", who: "rush hour on the metro", meter: "Ruta", intro: ["Hora pico. Mucha gente. ¿Dónde está la salida? 😵", "Rush hour. Lots of people. Where's the exit?"], win: ["¡Llegaste! Estás en Chapultepec. 🌳", "You made it! You're in Chapultepec."], lose: ["Te perdiste... ¡pero mañana llegas!", "You got lost... but tomorrow you'll make it!"] },
+    7: { name: "Don Beto el remero", av: "🛶", who: "the trajinera captain who only takes passengers with a plan", meter: "Remos", intro: ["¡Súbanse! Pero primero, díganme: ¿qué quieren hacer hoy?", "All aboard! But first, tell me: what do you want to do today?"], win: ["¡Excelente! Vamos a navegar todo el día. 🌺", "Excellent! We're going to sail all day."], lose: ["Casi. ¿Quieres intentar otra vez?", "Almost. Want to try again?"] },
     6: { name: "Duelo de mariachis", av: "🎺", who: "a sing-off with the mariachis", meter: "Aplausos", intro: ["¿Te gusta cantar? ¡Vamos a ver! 🎶", "Do you like to sing? Let's see!"], win: ["¡Ajúa! Toda la plaza aplaude para ti. 👏", "Ajúa! The whole plaza applauds for you."], lose: ["¡Buen intento! Mañana cantamos otra vez.", "Nice try! We'll sing again tomorrow."] }
   };
 
@@ -1210,6 +1325,7 @@ if (typeof module !== "undefined") module.exports = CONTENT;
     3: [{ f: "vale", t: "The profe is looking right at you. Say" }, { f: "mateo", t: "Mateo whispers: how do you say" }, { f: "churro", t: "A pigeon stole your notes 🐦 From memory, say" }, { f: "lucia", t: "Lucía passes you a note: how do you say" }],
     4: [{ f: "gaby", t: "Gabriela is showing you family photos. Say" }, { f: "diego", t: "Diego wants you to describe someone. Say" }, { f: "churro", t: "At the Casa Azul, the guide asks you to say" }],
     5: [{ f: "vale", t: "Valeria lost you in the park 😰 Text her" }, { f: "churro", t: "A grasshopper hops by and stares. Tell him" }, { f: "gaby", t: "Gabriela calls to check on you. Tell her" }],
+    7: [{ f: "vale", t: "On the trajinera, Valeria asks: how do you say" }, { f: "ajo", t: "Ajo pops out of the water 🦎 Tell him" }, { f: "diego", t: "Diego is making weekend plans. Say" }, { f: "mateo", t: "Mateo texts about the weekend. Reply" }],
     6: [{ f: "mateo", t: "Mateo is writing lyrics. Help him say" }, { f: "vale", t: "At Garibaldi, Valeria shouts: how do you say" }, { f: "churro", t: "A parrot will repeat whatever you say 🦜 Say" }]
   };
 
@@ -1273,6 +1389,27 @@ if (typeof module !== "undefined") module.exports = CONTENT;
     { f: "anon", es: "Pista: el puesto número siete. 7️⃣", tr: "Clue: stall number seven." },
     { f: "churro", en: "the creepy texter is back. stall SEVEN. ok — learn numbers first, then we go look. 🔢" }
   ];
+  C.SCENES[7] = [
+    { f: "vale", es: "¡{name}! ¿Quieres ir a Xochimilco el sábado? 🛶", tr: "{name}! Do you want to go to Xochimilco on Saturday?" },
+    { f: "churro", en: "Ana's list #7: «Navega en una trajinera en Xochimilco» = ride a trajinera boat. say yes before she invites Diego instead." },
+    { choice: [
+      { es: "¡Sí, quiero ir!", tr: "Yes, I want to go!", ok: 1, r: { f: "vale", es: "¡Qué padre! Vamos a pasear en trajinera. 🌺", tr: "How cool! We're going to ride a trajinera." } },
+      { es: "Sí, quero ir.", tr: "Yes, I want (wrong form) to go.", r: { f: "churro", en: "so close — querer is a BOOT verb: quiero, not quero. try again 👢" } },
+      { es: "No puedo leer.", tr: "I can't read.", r: { f: "churro", en: "that's 'I can't read.' bold life update. try again 😹" } }
+    ] },
+    { sys: "📍 Xochimilco · sábado por la mañana · colorful boats, flowers, music from every trajinera" },
+    { f: "diego", es: "¡Mira! ¡Un ajolote en el agua! 🦎", tr: "Look! An axolotl in the water!" },
+    { animalIntro: "ajolote", text: "A pink axolotl with frilly gills peeks up at you from the canal… and smiles." },
+    { f: "ajo", es: "Hola. Me llamo Ajo. Ana siempre pide un elote para mí. 🌽", tr: "Hi. My name is Ajo. Ana always orders a corn on the cob for me." },
+    { choice: [
+      { es: "¿Quieres un elote?", tr: "Do you want a corn on the cob?", ok: 1, r: { f: "ajo", es: "¡Sí! Gracias. Puedes volver cuando quieras. 💖", tr: "Yes! Thank you. You can come back whenever you want." } },
+      { es: "¿Puedes nadar?", tr: "Can you swim?", ok: 1, r: { f: "ajo", es: "Claro que puedo nadar. Soy un ajolote. 😏", tr: "Of course I can swim. I'm an axolotl." } },
+      { es: "Yo juego la guitarra.", tr: "I play (wrong verb) the guitar.", r: { f: "churro", en: "instruments use TOCAR. also… he's an axolotl. ask him something. try again" } }
+    ] },
+    { animal: "ajolote" },
+    { f: "churro", en: "welcome to Spanish 2 ✨ first new grammar: BOOT verbs. quiero, puedo, juego, pido… the stem changes in every form EXCEPT nosotros. draw a boot around them and it clicks 👢" },
+    { f: "churro", en: "plus voy a + verb = what you're GOING to do. that's how you make plans. vamos 🛶" }
+  ];
   // Chapters 3–6 keep their scenes; Churro takes over Lucía's tutor lines.
   [3, 4, 5, 6].forEach(n => C.SCENES[n].forEach(st => {
     if (st.f === "lucia" && st.en) st.f = "churro";
@@ -1285,7 +1422,8 @@ if (typeof module !== "undefined") module.exports = CONTENT;
     3: [["Ana también tenía clase con el profesor Ramírez. 👀", "Ana also had class with Professor Ramírez."]],
     4: [["A Ana le gustaba mucho Frida. ¿Y a ti?", "Ana really liked Frida. And you?"]],
     5: [["Estoy cerca, {name}. Más cerca de lo que piensas. 🙂", "I'm close, {name}. Closer than you think."]],
-    6: [["Ana cantaba en Garibaldi también. 🎶", "Ana used to sing at Garibaldi too."], ["(continuará…)", "(to be continued…)"]]
+    6: [["Ana cantaba en Garibaldi también. 🎶", "Ana used to sing at Garibaldi too."], ["(continuará…)", "(to be continued…)"]],
+    7: [["Siete de diez. ¿Vas a ir a Teotihuacán? 🔺", "Seven of ten. Are you going to go to Teotihuacán?"], ["Ana quiere conocerte. Muy pronto. 🙂", "Ana wants to meet you. Very soon."]]
   };
 
   /* ---------------- Ana's puzzles (one per location) ----------------
@@ -1787,7 +1925,8 @@ const INTRO = (function () {
     3: ["la escuela y los verbos -ar", "school and -ar verbs"],
     4: ["la familia y las descripciones", "family and descriptions"],
     5: ["los lugares, los sentimientos y ser vs. estar", "places, feelings and ser vs. estar"],
-    6: ["los pasatiempos, gustar y los verbos -er/-ir", "free time, gustar and -er/-ir verbs"]
+    6: ["los pasatiempos, gustar y los verbos -er/-ir", "free time, gustar and -er/-ir verbs"],
+    7: ["los verbos de cambio de raíz y los planes con ir a", "boot verbs and making plans with ir a"]
   };
   function locScenes(o) {
     const C = CONTENT, l = o.loc, L = C.LISTA[l.n - 1], B = C.BOSSES[l.u], T = TOPIC_ES[l.u];
@@ -2150,6 +2289,8 @@ function why(it, res) {
   if (tag === "gustar") out.push("Gusta + one thing or an action (infinitive). Gustan + plural things. Me / te / le / nos / les shows WHO likes it.");
   if (tag === "agree") out.push("Adjectives match the noun: -o for masculine, -a for feminine, add -s / -es for plural. Words ending in -e (or most consonants) don't change for gender.");
   if (tag === "art") out.push("el / los = masculine, la / las = feminine. un / una = a, an. Most -o nouns are masculine, most -a nouns feminine.");
+  if (tag === "boot") out.push("Boot verb: the stem changes (e→ie, o→ue, e→i, u→ue) in every form EXCEPT nosotros — quiero / queremos, puedo / podemos. The endings stay regular.");
+  if (tag === "ira") out.push("ir a + infinitive = going to do something: voy, vas, va, vamos, van + a + verb. Don't forget the a: Voy a comer.");
   if (tag === "poss") out.push("mi / tu / su + one thing; mis / tus / sus + plural. nuestro / nuestra / nuestros / nuestras matches the thing owned.");
   return out;
 }
@@ -2168,7 +2309,7 @@ function letterHint(it) {
 function freshState() {
   return {
     v: 1, name: "", onboarded: false, created: today(),
-    settings: { rate: 0.85, strict: false, autoplay: true, voice: "" },
+    settings: { rate: 0.85, strict: false, autoplay: true, voice: "", testFirst: true },
     items: {}, ch: { unlocked: 1, complete: {}, scenes: {}, cp: {} },
     sessions: [], daily: {}, streak: { count: 0, last: null, freezes: 2, best: 0 },
     fotos: [], log: [], mystery: {}, mysteryPending: [], goals: { weekly: 3 }, recent: [],
@@ -2183,11 +2324,14 @@ function peek(id) { return S.items[id]; }
 function introduced(id) { const s = peek(id); return !!(s && s.intro); }
 function isDue(id) { const s = peek(id); return !!(s && s.intro && s.due <= today()); }
 function acc(arr) { return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0; }
+const isS1 = id => { const it = ITEM[id]; const u = it && CONTENT.UNITS[(it.base ? ITEM[it.base].u : it.u) - 1]; return !!(u && u.level === "S1"); };
 function isMastered(id) {
   const s = peek(id); if (!s) return false;
-  // mastered = the 3 most recent unaided reviews were correct, each on a different day (hist holds one entry per day)
-  const h = s.hist.slice(-3);
-  return s.days.length >= 3 && s.box >= 3 && h.length === 3 && h.every(x => x === 1);
+  // Spanish 1 review: typed right with no help the very first time it came up = she already knows it
+  if (s.known) return true;
+  // otherwise: the 2 most recent unaided reviews were correct, on 2 different days (hist holds one entry per day)
+  const h = s.hist.slice(-2);
+  return s.days.length >= 2 && s.box >= 2 && h.length === 2 && h.every(x => x === 1);
 }
 function status(id) {
   const s = peek(id);
@@ -2208,7 +2352,7 @@ function record(id, outcome, ctx) {
   if (outcome === "gist") outcome = "retryok";   // counts as understood (learned / boss), not as mastery; comes back sooner
   const correct = ["ok", "accent", "retryok", "hint"].includes(outcome);
   const clean = outcome === "ok" || outcome === "accent";
-  s.seen++; s.intro = s.intro || T;
+  s.seen++; const firstSight = !s.intro; s.intro = s.intro || T;
   const before = { lv: s.lv, box: s.box };
   // scaffold level
   if (clean) s.lv = Math.max(s.lv, Math.min(3, lv + ((lv === 1 && rolling() >= 0.9) ? 2 : 1)));
@@ -2220,6 +2364,7 @@ function record(id, outcome, ctx) {
       if (s.lastBox !== T) {
         // first unaided recall with no prior misses = she already knew it → skip a step
         s.box = Math.min(7, s.box === 0 && s.lapses === 0 ? 2 : s.box + 1); s.lastBox = T;
+        if (firstSight && isS1(id)) { s.known = T; s.solid = s.solid || T; }
         const elapsed = s.ld ? T - s.ld : 0;
         s.due = T + Math.max(INTERVALS[s.box], Math.min(120, Math.round(elapsed * 1.5)));
         if (!s.days.includes(T)) s.days.push(T);
@@ -2227,7 +2372,7 @@ function record(id, outcome, ctx) {
       }
     } else if (lv === 3 && !correct) {
       if (s.lastBox !== T) s.hist.push(0);
-      s.box = Math.max(0, Math.floor(s.box / 2)); s.lastBox = T; s.lapses++;
+      s.box = Math.max(0, Math.floor(s.box / 2)); s.lastBox = T; s.lapses++; delete s.known;
       s.due = T + 1;
     } else {
       if (s.due <= T) s.due = T + 1;
@@ -2272,9 +2417,11 @@ function readiness() {
 
 /* ---------- session building ---------- */
 function verbGroup(id) { const it = ITEM[id]; return it.t === "j" ? UNIT_BASE[it.u].filter(x => ITEM[x].t === "j" && ITEM[x].verb === it.verb) : [id]; }
-function nextNewItems(budget) {
+function nextNewItems(budget, units) {
   const out = []; let cost = 0;
-  for (let u = 1; u <= S.ch.unlocked && cost < budget; u++) {
+  units = units || Array.from({ length: S.ch.unlocked }, (_, i) => i + 1);
+  for (const u of units) {
+    if (cost >= budget) break;
     for (const id of UNIT_BASE[u]) {
       if (cost >= budget) break;
       if (introduced(id) || out.some(g => g.includes(id))) continue;
@@ -2306,8 +2453,16 @@ function buildSession(len) {
   if (due.length > len * 3 * hm) budget = 0; else if (due.length > len * 2 * hm) budget = Math.min(budget, 5);
   budget = Math.round(budget * len / 18 * (honeymoon() && r >= 0.8 ? 2 : 1));
   budget = Math.min(budget, S.recent.length < 8 ? 12 : 28);   // gentle very first session
-  const groups = nextNewItems(budget);
-  const newTaskCount = groups.reduce((a, g) => a + (g.length > 1 ? 3 : 2), 0);
+  // Spanish 1 is review: bigger batches, asked first instead of taught first
+  // Spanish 2 chapters are taught; Spanish 1 review is asked first (test-first), in bigger batches
+  const tf = testFirst();
+  const allU = Array.from({ length: S.ch.unlocked }, (_, i) => i + 1);
+  const s1U = allU.filter(u => CONTENT.UNITS[u - 1].level === "S1"), s2U = allU.filter(u => !s1U.includes(u));
+  // brand-new Spanish 2 grammar: at most ~16 new items per round (long sessions top up with more)
+  const groups = tf ? nextNewItems(Math.min(budget, 16), s2U) : nextNewItems(budget, allU);
+  const probeGroups = tf && budget > 0 ? nextNewItems(groups.length ? 12 : Math.min(Math.round(budget * 2.5) + 4, 36), s1U) : [];
+  const probes = probeGroups.map(g => g.length > 1 ? { id: g[0], kind: "table", ids: g, lv: 3, countable: true, probe: true } : { id: g[0], kind: "task", lv: 3, countable: true, probe: true });
+  const newTaskCount = groups.reduce((a, g) => a + (g.length > 1 ? 3 : 2), 0) + probes.length;
   const reviewCount = Math.max(Math.min(due.length, 4), len - newTaskCount);
   let reviews = [], slots = 0, seenVerb = {};
   for (const id of due) {
@@ -2332,8 +2487,8 @@ function buildSession(len) {
   // conjugation tables: several due forms of one verb become ONE table task
   const tables = [];
   const byVerb = {};
-  reviews.forEach(id => { const it = ITEM[id]; if (it.t === "j" && peek(id).lv >= 2) (byVerb[it.verb] = byVerb[it.verb] || []).push(id); });
-  Object.values(byVerb).forEach(ids => { if (ids.length >= 2) { tables.push({ id: ids[0], ids, kind: "table", lv: 3, countable: true }); reviews = reviews.filter(x => !ids.includes(x)); } });
+  reviews.forEach(id => { const it = ITEM[id]; if (it.t === "j") (byVerb[it.verb] = byVerb[it.verb] || []).push(id); });
+  Object.values(byVerb).forEach(ids => { tables.push(chartTask(ids)); const all = verbGroup(ids[0]); reviews = reviews.filter(x => !all.includes(x)); });
   const task = (id, lv) => ({ id, kind: "task", lv: lv || null, countable: isDue(id) || !peek(id) || peek(id).intro === T });
   const q = [];
   // warm up with something she knows
@@ -2354,8 +2509,8 @@ function buildSession(len) {
     const filler = () => reviews.length ? task(reviews.shift()) : carry.length ? carry.shift() : null;
     let f = filler(); if (f) q.push(f);
     checks.forEach(id => { q.push({ id, kind: "task", lv: 1, countable: true }); const f2 = filler(); if (f2) q.push(f2); });
-    const nextSecond = batch.flatMap(g => g.length > 1 ? shuffle(g).slice(0, 1) : g);
-    if (!reviews.length) carry.push(...nextSecond.map(id => ({ id, kind: "task", lv: 3, second: true, countable: true })));
+    const nextSecond = batch.flatMap(g => g.length > 1 ? [{ id: g[0], kind: "table", ids: shuffle(g).slice(0, 3), lv: 3, second: true, countable: true }] : g.map(id => ({ id, kind: "task", lv: 3, second: true, countable: true })));
+    if (!reviews.length) carry.push(...nextSecond);
     else second.push(...nextSecond);
   }
   // remaining reviews interleaved with second pass of new items (word bank / hints)
@@ -2363,11 +2518,13 @@ function buildSession(len) {
   tables.forEach(t => rest.splice(Math.floor(Math.random() * (rest.length + 1)), 0, t));
   // second check of each new item: later in the session, typed when she's doing well or in honeymoon
   const lv2 = 3;
-  second.forEach(id => { const lo = Math.floor(rest.length / 3); rest.splice(lo + Math.floor(Math.random() * (rest.length - lo + 1)), 0, { id, kind: "task", lv: lv2, second: true, countable: true }); });
+  second.forEach(x => { const lo = Math.floor(rest.length / 3); rest.splice(lo + Math.floor(Math.random() * (rest.length - lo + 1)), 0, x); });
+  // Spanish 1 review: test first — she only gets taught the ones she doesn't remember
+  probes.forEach((x, k) => rest.splice(Math.min(rest.length, k * 2), 0, x));
   q.push(...rest);
   // avoid the same item twice in a row
   for (let i = 1; i < q.length; i++) if (q[i].id === q[i - 1].id && q[i].kind === "task") { const j = q.findIndex((x, k) => k > i + 1 && x.id !== q[i].id); if (j > 0) [q[i], q[j]] = [q[j], q[i]]; }
-  if (!q.some(x => x.kind === "task")) {
+  if (!q.some(x => x.kind !== "intro")) {
     // nothing due & nothing new → bonus practice (never changes mastery)
     const notSolid = id => !(peek(id).solid || peek(id).box >= 1) ? 0 : 1;
     const pool = Object.keys(S.items).filter(id => ITEM[id] && introduced(id)).sort((a, b) => notSolid(a) - notSolid(b) || peek(a).box - peek(b).box);
@@ -2375,6 +2532,38 @@ function buildSession(len) {
     return { queue: b, bonus: true };
   }
   return { queue: q, bonus: false };
+}
+// test-first stays on unless she turned it off, or most recent Spanish 1 probes were "teach me" (true beginner)
+function testFirst() { if (S.settings.testFirst === false) return false; const p = S.probes || []; return p.length < 8 || acc(p) >= 0.35; }
+/* a conjugation chart for one verb: every form she has met is blank; only the due ones count toward spacing */
+function chartTask(dueIds) {
+  const all = verbGroup(dueIds[0]).filter(introduced);
+  let blanks = all.slice();
+  // still shaky on this verb? give 2 forms as hints
+  if (dueIds.some(id => (peek(id).lv || 1) < 2) && all.length >= 4) { const give = shuffle(all.filter(id => !dueIds.includes(id))).slice(0, 2); blanks = all.filter(id => !give.includes(id)); }
+  return { id: dueIds[0], ids: blanks, cnt: dueIds.slice(), kind: "table", lv: 3, countable: true };
+}
+/* 🏋️ Verb charts: practice charts for verbs she has met (due / shaky first) */
+function buildCharts(n) {
+  const verbs = {};
+  Object.keys(S.items).forEach(id => { const it = ITEM[id]; if (it && it.t === "j" && introduced(id)) (verbs[it.u + ":" + it.verb] = verbs[it.u + ":" + it.verb] || []).push(id); });
+  const score = ids => (ids.some(isDue) ? 0 : 2) + (ids.some(id => status(id) === "shaky") ? 0 : 1) + Math.min(...ids.map(id => peek(id).box)) / 10;
+  const keys = Object.keys(verbs).sort((a, b) => score(verbs[a]) - score(verbs[b]) || Math.random() - 0.5).slice(0, n || 6);
+  return shuffle(keys).map(k => { const ids = verbs[k]; const due = ids.filter(isDue); return { id: ids[0], ids, cnt: due, kind: "table", lv: 3, countable: true }; });
+}
+/* ⚡ Speed round: due reviews + not-yet-solid phrases + Spanish 1 review asked cold */
+function buildSpeed(n) {
+  n = n || 60;
+  const due = shuffle(dueList().filter(id => ITEM[id].t !== "j"));
+  const weak = shuffle(Object.keys(S.items).filter(id => ITEM[id] && introduced(id) && ITEM[id].t !== "j" && !isDue(id) && !isMastered(id)));
+  const fresh = [];
+  if (testFirst()) for (let u = 1; u <= S.ch.unlocked; u++) UNIT_BASE[u].forEach(id => { if (!introduced(id) && isS1(id) && ITEM[id].t !== "j") fresh.push(id); });
+  const out = [];
+  const take = (arr, k, f) => arr.slice(0, k).forEach(id => { if (out.length < n && !out.some(x => x.id === id)) out.push(f(id)); });
+  take(due, 25, id => ({ id, kind: "task", lv: null, countable: true }));
+  take(fresh, n, id => ({ id, kind: "task", lv: 3, countable: true, probe: true }));
+  take(weak, n, id => ({ id, kind: "task", lv: null, countable: false }));
+  return shuffle(out);
 }
 function buildCheckpoint(u) {
   const ids = UNIT_BASE[u];
@@ -2461,7 +2650,7 @@ function weekSessions() {
   return new Set(S.sessions.filter(s => s.day >= start && s.n >= 5).map(s => s.day + ":" + s.t)).size;
 }
 
-if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: () => S, setDay: d => DAY_OVERRIDE = d, today, expand, prepContent, ITEM, UNIT_BASE, DERIVED, check, norm, acceptList, why, hintRule, letterHint, freshState, st, record, introduce, status, isMastered, unitStats, chapterReady, cpAvailable, buildSession, buildCheckpoint, buildPlacement, applyPlacement, updateStreak, readiness, honeymoon, levelInfo, addXP, buildProveIt, applyProveIt, setS2: x => S = x, canon, fullSentence, nextNewItems, dueList };
+if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: () => S, setDay: d => DAY_OVERRIDE = d, today, expand, prepContent, ITEM, UNIT_BASE, DERIVED, check, norm, acceptList, why, hintRule, letterHint, freshState, st, record, introduce, status, isMastered, unitStats, chapterReady, cpAvailable, buildSession, buildCheckpoint, buildCharts, buildSpeed, isS1, buildPlacement, applyPlacement, updateStreak, readiness, honeymoon, levelInfo, addXP, buildProveIt, applyProveIt, setS2: x => S = x, canon, fullSentence, nextNewItems, dueList };
 
 /* ============================================================
    INTERCAMBIO — UI layer
@@ -2517,6 +2706,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     let o = null; try { o = JSON.parse(lsGet(SKEY(id)) || "null"); } catch (e) { }
     S = o ? migrate(o) : freshState(); curId = id; PROF.last = id; saveProfiles();
     if (!S.av) S.av = (PROF.list.find(x => x.id === id) || {}).av || "ajolote";
+    // new chapters were added after this player finished the last one → open the next
+    while (S.ch.complete[S.ch.unlocked] && S.ch.unlocked < UNITS.length) S.ch.unlocked++;
   }
   function newProfile(name, av) {
     const id = "p" + Date.now().toString(36) + Math.floor(Math.random() * 1e4);
@@ -2525,7 +2716,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
   }
   function migrate(o) { const f = freshState(); for (const k in f) if (!(k in o)) o[k] = f[k]; for (const k in f.settings) if (!(k in o.settings)) o.settings[k] = f.settings[k]; return o; }
 
-  const APP_VERSION = "2.7 (Nov 24)";
+  const APP_VERSION = "2.8 (Nov 27)";
   /* ---------------- backups (code text; works anywhere copy/paste works) ---------------- */
   const b64 = bytes => { let s = ""; bytes.forEach(b => s += String.fromCharCode(b)); return btoa(s); };
   const unb64 = str => Uint8Array.from(atob(str), c => c.charCodeAt(0));
@@ -2757,8 +2948,9 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       const score = res.correct; applyPlacement(P.u, score); P.results[P.u] = score;
       const full = score >= 5;
       if (full) { S.ch.complete[P.u] = today(); S.ch.scenes[P.u] = 1; deliverMystery(P.u, true); }
-      if (full && P.u < UNITS.length) { P.u++; S.ch.unlocked = P.u; save(); runPlacementUnit(); }
-      else { if (!full) S.ch.unlocked = P.u; save(); placementDone(); }
+      const lastS1 = UNITS.filter(x => x.level === "S1").length;   // placement only covers Spanish 1
+      if (full && P.u < lastS1) { P.u++; S.ch.unlocked = P.u; save(); runPlacementUnit(); }
+      else { S.ch.unlocked = full ? Math.min(P.u + 1, UNITS.length) : P.u; save(); placementDone(); }
     } });
   }
   function placementDone() {
@@ -2853,7 +3045,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     const go = fn => () => { close(); setTimeout(fn, 30); };
     const row = (icon, title, sub, btn) => h("div", { class: "loc-row" }, h("span", { class: "lr-ic", "aria-hidden": "true" }, icon), h("div", { class: "lr-t" }, h("b", null, title), h("small", null, sub)), btn || null);
     let tasks = null;
-    if (l.soon) tasks = h("p", { class: "small" }, l.s2 ? "🔒 Spanish 2 preview — opens when your Spanish 1 chapters are mastered. (Coming in the full version.)" : "🚧 Coming in the full version.");
+    if (l.soon) tasks = h("p", { class: "small" }, "🚧 The next Spanish 2 chapter — coming soon.");
     else if (!reached) tasks = h("p", { class: "small" }, `🔒 Beat the boss at ${LOCS[l.id - 2].name} to travel here.`);
     else {
       const us = unitStats(u), P = PUZZLES[u], B = BOSSES[u];
@@ -2925,6 +3117,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       h("button", { class: "choice-card", onclick: () => go(15, 5) }, h("b", null, "☕ Quick · ~5 min"), h("span", null, "A few reviews. Good for busy days.")),
       h("button", { class: "choice-card", onclick: () => go(35, 12) }, h("b", null, "🎧 Normal · ~10–12 min"), h("span", null, "Reviews + new stuff + story.")),
       h("button", { class: "choice-card", onclick: () => go(55, 20) }, h("b", null, "🔥 Long · ~20 min"), h("span", null, "Lock in. Max progress.")),
+      h("button", { class: "choice-card speed", onclick: () => { closeM(); startSpeed(); } }, h("b", null, "⚡ Speed round · 5 min"), h("span", null, "Rapid-fire typing. Clears review fast.")),
+      h("button", { class: "choice-card charts", onclick: () => { closeM(); startCharts(); } }, h("b", null, "🏋️ Verb charts"), h("span", null, "Fill in whole conjugation charts for verbs you've met.")),
       h("p", { class: "small" }, "You can stop anytime — progress saves after every answer."));
     const closeM = modal("How long do you have?", body, [{ label: "Cancel" }]);
   }
@@ -2932,6 +3126,16 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
   /* ================================================================
      STORY + SESSION FLOW
      ================================================================ */
+  function startSpeed() {
+    const q = buildSpeed(60);
+    if (!q.length) { toast("Nothing to speed through yet — play a normal session first"); return; }
+    runSession({ queue: q, mode: "speed", unit: S.ch.unlocked, mins: 5, len: 60, title: "⚡ Speed round · 5 min", onDone: sessionSummary });
+  }
+  function startCharts() {
+    const q = buildCharts(6);
+    if (!q.length) { toast("Meet your first verb in a normal session, then come back 💪"); return; }
+    runSession({ queue: q, mode: "charts", unit: S.ch.unlocked, title: "🏋️ Verb charts", onDone: sessionSummary });
+  }
   async function startPlay(len, mins) {
     len = len || 35; mins = mins || 12;
     const u = S.ch.unlocked;
@@ -3103,7 +3307,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       onQuit: () => { if (strict()) { modal("Leave this?", h("p", null, R.mode !== "place" ? "No worries — you can try again later." : "You can do the check-in later from scratch, or just start at Chapter 1."), [{ label: "Stay" }, { label: "Leave", primary: 1, fn: () => { if (R.mode === "place") { S.onboarded = true; save(); } home(); } }]); } else finish(true); }
     });
     let currentItem = null;
-    if (cfg.mode === "bonus") chat.add(bubble({ f: "churro", en: "extra practice round 🫡 type them with no hints and they count toward your chapter. (\"mastered\" still needs a few different days — sleep does that part 😴)" }));
+    if (cfg.mode === "bonus") chat.add(bubble({ f: "churro", en: "extra practice round 🫡 type them with no hints and they count toward your chapter. (\"mastered\" needs 2 different days — sleep does that part 😴)" }));
     let meterEl = null;
     if (cfg.meter) {
       const M = cfg.meter;
@@ -3119,6 +3323,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     function shouldStop() {
       if (!R.mins) return false;
       if ((Date.now() - R.start) / 60000 < R.mins) return false;
+      if (R.mode === "speed") return true;
       // finish naturally: don't stop in the middle of learning brand-new items
       // never end before the typed check of phrases learned this session (that's what makes them "solid")
       return !R.q.slice(R.i).some(x => x.kind === "intro" || (x.lv === 1 && x.countable) || (x.second && R.newIds.has(x.id)));
@@ -3136,6 +3341,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       const e = R.q[R.i++];
       if (e.kind === "intro") return showIntro(e);
       if (e.kind === "table") return showTable(e);
+      if (R.mode === "speed") chat.setProgress(Math.min(1, (Date.now() - R.start) / 60000 / R.mins));
       return showTask(e);
     }
 
@@ -3175,7 +3381,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       const s = st(e.id);
       let lv = e.lv || s.lv || 1;
       if (e.second && s.lv < 2) lv = 2;                         // missed the first check → word bank / letters instead of free typing
-      if (strict()) return 3;
+      if (strict() || e.probe) return 3;
       if (lv === 3 && R.wrongRun >= 2) lv = 2;                     // frustration guard: add support
       if (lv === 3 && rolling() < 0.65 && s.box < 2) lv = 2;
       return Math.max(1, Math.min(3, lv));
@@ -3229,7 +3435,8 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         setTimeout(() => speak(P.audio), 350);
         if (!hasTTS) card.append(h("div", { class: "note" }, "This browser can't play audio — here it is written: " + P.audio));
       }
-      else card = h("div", { class: "card task" }, h("div", { class: "tag" }, it.q || P.sp ? "Your turn" : "Say it in Spanish"), h("div", { class: "ask" }, P.ask));
+      else card = h("div", { class: "card task" }, h("div", { class: "tag" }, e.probe ? "Spanish 1 review · remember this?" : it.q || P.sp ? "Your turn" : "Say it in Spanish"), h("div", { class: "ask" }, P.ask));
+      if (e.probe && card.querySelector(".tag")) card.querySelector(".tag").textContent = "Spanish 1 review · remember this?";
       const c = R.mode === "cp" ? CHARS["boss" + R.unit] : P.sp ? CHARS[P.sp] : CHARS[it.t === "l" || it.t === "nl" ? (it.u >= 3 ? "mateo" : "vale") : (P.cloze ? "profe" : P.conj ? "churro" : it.q ? speakerFor(it) : "lucia")];
       chat.add(h("div", { class: "msg them" }, avatar(c), h("div", { class: "col" }, h("div", { class: "who" }, c.name), card)));
       chat.dock.innerHTML = "";
@@ -3266,7 +3473,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         row.append(pb);
       }
       if (!mcMode || R.mode !== "place") {
-        row.append(h("button", { class: "btn ghost", type: "button", onclick: () => resolve(e, it, lv, "idk", "", {}) }, R.mode === "place" ? "🤷 No idea" : "🤷 No sé"));
+        row.append(h("button", { class: "btn ghost", type: "button", onclick: () => resolve(e, it, lv, "idk", "", {}) }, R.mode === "place" ? "🤷 No idea" : e.probe ? "🤷 Teach me" : "🤷 No sé"));
       }
       if (!noHelp) row.append(h("button", { class: "btn ghost", type: "button", onclick: () => itemHelp(it) }, "📒 Explain"));
       return row;
@@ -3319,7 +3526,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     /* ----- conjugation table task (several forms of one verb) ----- */
     function showTable(e) {
       const it = ITEM[e.id]; currentItem = it; window.__cur = { it, e }; const v = VERBS[it.verb];
-      const card = h("div", { class: "card task" }, h("div", { class: "tag" }, "Conjugation table ✍️"), h("div", { class: "es-big", lang: "es" }, h("b", null, it.verb), h("span", { class: "en-inline" }, " (" + v.en + ")")));
+      const card = h("div", { class: "card task" }, h("div", { class: "tag" }, e.probe ? "Spanish 1 review · fill in the chart" : "Conjugation chart ✍️"), h("div", { class: "es-big", lang: "es" }, h("b", null, it.verb), h("span", { class: "en-inline" }, " (" + v.en + ")")));
       chat.add(h("div", { class: "msg them" }, avatar(CHARS.profe), h("div", { class: "col" }, h("div", { class: "who" }, CHARS.profe.name), card)));
       chat.dock.innerHTML = "";
       const inputs = {};
@@ -3336,11 +3543,12 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       ids.forEach(id => inputs[id].addEventListener("focus", () => focused = inputs[id]));
       const bar = accentBar({ get selectionStart() { return focused.selectionStart; }, get selectionEnd() { return focused.selectionEnd; }, get value() { return focused.value; }, set value(x) { focused.value = x; }, focus: () => focused.focus(), setSelectionRange: (a, b) => focused.setSelectionRange(a, b), dispatchEvent: ev => focused.dispatchEvent(ev) });
       const done = () => {
-        tick(); let allRight = true; const lines = [];
+        tick(); let allRight = true; const lines = []; const missed = [];
         ids.forEach(id => {
           const x = ITEM[id]; const res = check(inputs[id].value, x, { noClose: true });
           const outcome = res.r === "ok" ? "ok" : res.r === "accent" ? "accent" : "wrong";
-          const r = record(id, inputs[id].value.trim() ? outcome : "idk", { lv: 3, countable: true });
+          if (e.probe && outcome === "wrong") { missed.push(id); allRight = false; inputs[id].disabled = true; inputs[id].classList.add("wrong"); lines.push(`${PERSONS[x.p]} → <b>${x.a[0]}</b>`); return; }
+          const r = record(id, inputs[id].value.trim() ? outcome : "idk", { lv: 3, countable: R.mode === "bonus" ? false : !e.cnt || e.cnt.includes(id) || !!e.second });
           R.n++; if (r.correct) R.correct++; else { allRight = false; R.missed.push(id); requeue(id, 2); }
           gainXP(outcome === "ok" ? XP.unaided : outcome === "accent" ? XP.accent : XP.effort, R);
           if (r.leveled) R.leveled.add(id);
@@ -3348,7 +3556,14 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
           if (!r.correct) lines.push(`${PERSONS[x.p]} → <b>${x.a[0]}</b>`);
           else if (outcome === "accent") lines.push(`${PERSONS[x.p]}: ✅ but accent → <b>${x.a[0]}</b>`);
         });
+        if (e.probe) logProbe(missed.length <= ids.length / 2);
         save(); bumpRuns(allRight);
+        if (missed.length) {
+          const later = (k, y) => R.q.splice(Math.min(R.q.length, R.i + k), 0, y);
+          missed.forEach(id => { R.newIds.add(id); });
+          if (R.mode === "speed") missed.forEach(id => introduce(id, 1));
+          else { R.q.splice(R.i, 0, { id: missed[0], kind: "intro", group: missed }); later(4, { id: missed[0], kind: "table", ids: missed, lv: 3, countable: true, second: true }); }
+        }
         const msg = allRight && !lines.length ? praise() : (allRight ? "Counted ✅ — " : "Almost! ") + lines.join("<br>") + (v.type === "irr" ? `<div class="why">${v.tip}</div>` : `<div class="why">-${v.type} endings: ${ENDINGS[v.type].map(x => "-" + x).join(", ")}</div>`);
         feedback({ html: msg, ok: allRight }, () => next());
       };
@@ -3367,8 +3582,25 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     const PRAISE = ["¡Eso! ✅", "¡Perfecto! ✨", "¡Muy bien! 🙌", "Correcto ✅", "¡Exacto! 🎯", "¡Bien hecho! 💪", "¡Qué bien! ✅"];
     const praise = () => pick(PRAISE);
 
+    function logProbe(hit) { S.probes = (S.probes || []).concat(hit ? 1 : 0).slice(-12); }
+    function probeMiss(e, it, input, ids) {
+      ids = ids || [e.id];
+      if (input) chat.add(bubble({ f: "me", es: input }));
+      if (R.mode === "speed") {
+        ids.forEach(id => { introduce(id, 1); R.newIds.add(id); }); save();
+        feedback({ html: `New one for your list 📝 <div class="correct"><span lang="es">✔ ${esc(answerText(it))}</span></div><div class="small">It'll show up in your normal practice.</div>`, ok: false, neutral: true, audio: answerText(it) }, () => next());
+        return;
+      }
+      chat.add(bubble({ f: "churro", en: pick(["no worries — here it is 👇", "that one slipped away. quick refresher 👇", "all good. let's relearn it 👇"]) }));
+      const later = (k, x) => R.q.splice(Math.min(R.q.length, R.i + k), 0, x);
+      R.q.splice(R.i, 0, { id: ids[0], kind: "intro", group: ids });
+      if (ids.length > 1) later(4, { id: ids[0], kind: "table", ids: shuffle(ids).slice(0, Math.min(3, ids.length)), lv: 3, countable: true, second: true });
+      else { later(3, { id: ids[0], kind: "task", lv: 1, countable: true }); later(8, { id: ids[0], kind: "task", lv: 3, second: true, countable: true }); }
+      next();
+    }
     function resolve(e, it, lv, outcome, input, res) {
       tick();
+      if (e.probe) { const hit = ["ok", "accent", "retryok", "hint", "gist"].includes(outcome); logProbe(hit); if (!hit) return probeMiss(e, it, input); }
       const countable = R.mode === "place" || R.mode === "bonus" || R.mode === "prove" ? false : R.mode === "cp" ? e.countable : e.countable !== false;
       const correct = ["ok", "accent", "retryok", "hint", "gist"].includes(outcome) && !((outcome === "accent" || outcome === "gist") && S.settings.strict);
       if (R.mode !== "place") {
@@ -3436,6 +3668,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       let go = () => { document.removeEventListener("keydown", kh); if (R.levelUps.length) { const L = R.levelUps.shift(); levelUpModal(L, cont); } else cont(); };
       const kh = ev => { if (ev.key === "Enter" && document.activeElement === btn) { ev.preventDefault(); } };
       btn.addEventListener("click", () => go());
+      if (R.mode === "speed" && f.ok) { chat.dock.append(btn); setTimeout(() => { if (btn.isConnected) go(); }, 700); return; }
       if (f.retype) {
         const i = textInput("Type it once to lock it in (optional)");
         const ok = h("div", { class: "small retype-ok", "aria-live": "polite" });
@@ -3695,6 +3928,16 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
      ================================================================ */
   const LESSON_XP = 30;
   const LESSONS = {
+    botas: { e: "👢", title: "Boot verbs & making plans", es: "Los verbos de bota", units: [7], cards: [
+      { h: "Boot verbs change their stem", table: [["quiero", "I want (e→ie)"], ["quieres", "you want"], ["quiere", "he / she wants"], ["queremos", "we want — no change!"], ["quieren", "they want"]], note: "Draw a boot around yo, tú, él and ellos — those change. Nosotros sits outside the boot and keeps the normal stem." },
+      { h: "Four kinds of boots", ex: [["quiero · empiezo · prefiero", "e → ie"], ["puedo · duermo · vuelvo", "o → ue"], ["pido", "e → i"], ["juego", "u → ue (only jugar)"]], note: "The endings are the normal -ar / -er / -ir endings. Only the vowel in the middle changes." },
+      { h: "Plans: ir + a + infinitive", frame: ["Voy", "a", "[verbo]"], ex: [["Voy a estudiar.", "I'm going to study."], ["¿Qué vas a hacer?", "What are you going to do?"], ["Vamos a comer tacos.", "We're going to eat tacos."]], note: "voy, vas, va, vamos, van + a + verb. The little word a is required." },
+      { h: "Verb + infinitive", frame: ["Quiero", "[verbo]"], ex: [["Quiero ir.", "I want to go."], ["Puedo nadar.", "I can swim."], ["Tengo que trabajar.", "I have to work."]], note: "After querer, poder, preferir and tener que, the second verb stays in its -ar / -er / -ir form." }],
+      practice: [
+        { ask: "I want to sleep.", a: ["Quiero dormir."] },
+        { ask: "We can go.", a: ["Podemos ir."] },
+        { ask: "She orders tacos.", a: ["[Ella |]pide tacos."] },
+        { ask: "I'm going to play soccer.", a: ["Voy a jugar [al |a |]fútbol."] }] },
     frames: { e: "🗓️", title: "Dates, time & age: sentence frames", es: "Fechas, hora y edad", units: [2], cards: [
       { h: "Dates: el + number + de + month", frame: ["Hoy es", "el", "[número]", "de", "[mes]"], ex: [["Hoy es el dos de mayo.", "Today is May 2nd."], ["Mi cumpleaños es el quince de marzo.", "My birthday is March 15th."]], note: "The day comes first, and you need BOTH little words: el … de. The 1st is “el primero.” Months are lowercase." },
       { h: "Time: Es la una / Son las…", frame: ["Son", "las", "[número]", "(y media / y cuarto)"], ex: [["Es la una.", "It's 1:00."], ["Son las tres y media.", "It's 3:30."], ["La clase es a las ocho.", "Class is at 8:00."]], note: "One o'clock is singular (Es la una). Every other hour is plural (Son las…). “At” a time = a las." },
@@ -3740,7 +3983,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
         { ask: "the girls", a: ["las chicas"] },
         { ask: "the tall boy", a: ["el chico alto"] }] }
   };
-  const TIP_TO_LESSON = k => k === "frames" ? "frames" : (k === "smallwords" || k === "order") ? "orden" : k.startsWith("conj") ? "verbos" : (k === "article" || k === "agree") ? "genero" : (k === "accent-q" || k === "punct") ? "preguntas" : null;
+  const TIP_TO_LESSON = k => k === "frames" ? "frames" : (k === "smallwords" || k === "order") ? "orden" : (k.startsWith("conj-") && VERBS[k.slice(5)] && (VERBS[k.slice(5)].stem || k === "conj-ir")) ? "botas" : k.startsWith("conj") ? "verbos" : (k === "article" || k === "agree") ? "genero" : (k === "accent-q" || k === "punct") ? "preguntas" : null;
   function lessonForUnit(u) { return Object.keys(LESSONS).find(id => LESSONS[id].units.includes(u) && !(S.lessons || {})[id]) || null; }
   function frameEl(parts) { return h("div", { class: "frame" }, parts.map((p, i) => h("span", { class: /^\[|^\(/.test(p) ? "slot" : "fixed", style: `animation-delay:${0.2 * i}s`, lang: "es" }, p.replace(/^\[|\]$/g, "")))); }
   window.LESSONS_DBG = LESSONS;
@@ -3925,7 +4168,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
     const goalSel = h("select", { "aria-label": "Weekly session goal", onchange: e => { S.goals.weekly = +e.target.value; save(); } }, [2, 3, 4, 5, 6].map(n => h("option", { value: n, selected: S.goals.weekly === n ? true : null }, `${n} sessions / week`)));
     const focus = h("input", { type: "checkbox", id: "focus", checked: S.focusShaky ? true : null, onchange: e => { S.focusShaky = e.target.checked; save(); } });
     const body = h("div", { class: "pad" },
-      h("div", { class: "card ready" }, ring(rd.frac, "Spanish 2 readiness"), h("div", null, h("b", null, "Spanish 2 readiness"), h("p", { class: "small" }, `${rd.mastered} of ${rd.total} Spanish 1 skills mastered. Mastered = right with no help on 3 different days in a row.`))),
+      h("div", { class: "card ready" }, ring(rd.frac, "Spanish 2 readiness"), h("div", null, h("b", null, "Spanish 2 readiness"), h("p", { class: "small" }, `${rd.mastered} of ${rd.total} Spanish 1 skills mastered. Mastered = typed right with no help the first time you see it, or on 2 different days.`))),
       h("h2", null, "What I know / what's shaky"),
       h("div", { class: "legend" }, h("span", { class: "m" }, "Mastered"), h("span", { class: "l" }, "Learning"), h("span", { class: "s" }, "Shaky"), h("span", { class: "n" }, "Not yet")),
       UNITS.map(u => {
@@ -3940,7 +4183,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       h("h2", null, "My goal"), goalSel,
       h("p", { class: "small" }, `This week: ${weekSessions()} session(s). Streak best: ${S.streak.best} days.`),
       h("h2", null, "How unlocking works"),
-      h("p", { class: "small" }, `Each place on the map has a boss. The boss shows up once you've met the chapter's phrases and gotten at least ${pct(GATE_FRAC)} of them right. Beat the boss (${Math.ceil(10 * CP_PASS)} of 10) — or ace a ⚡ Prove it (${PROVE_PASS} of ${PROVE_N}) — to unlock the next place. Small spelling typos count; grammar mistakes don't. Older chapters keep coming back in your reviews. Spanish 2 previews will need Spanish 1 chapters mastered (90% of items). You can't rush it in one day — sleep is part of how memory works.`));
+      h("p", { class: "small" }, `Each place on the map has a boss. The boss shows up once you've met the chapter's phrases and gotten at least ${pct(GATE_FRAC)} of them right. Beat the boss (${Math.ceil(10 * CP_PASS)} of 10) — or ace a ⚡ Prove it (${PROVE_PASS} of ${PROVE_N}) — to unlock the next place. Small spelling typos count; grammar mistakes don't. Older chapters keep coming back in your reviews. Beat the last Spanish 1 boss and Spanish 2 (Xochimilco) opens right away.`));
     setScreen(h("div", { class: "page" }, topbar("Progreso 📊"), body));
   }
   function answerFor(id) { const it = ITEM[id]; return it.t === "c" ? fullSentence(it) : it.t === "j" ? `${it.verb} → ${PERSONS[it.p]}: ${it.a[0]}` : it.t === "nl" ? `🎧 ${it.canonRaw}` : it.t === "l" ? "🎧 " + canon(it) : canon(it); }
@@ -4016,6 +4259,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       tog("autoplay", "Auto-play Spanish audio", "Messages and answers are read aloud."),
       h("p", { class: "small" }, SR ? "🎤 Speaking answers works in this browser — tap the mic when typing." : "🎤 Want to speak your answers? Use your keyboard's own mic. iPhone: add the Español (México) keyboard (Settings → General → Keyboard → Keyboards), switch to it with 🌐, then tap the keyboard's 🎤. Mac: turn on Dictation with Spanish (System Settings → Keyboard)."),
       h("h2", null, "Grading"),
+      tog("testFirst", "Spanish 1 review: test me first", "Already took Spanish 1? You're asked first and only taught what you don't remember. Turn off to be taught everything first. (Switches off by itself if most answers are “Teach me.”)"),
       tog("strict", "Strict accents & punctuation (test mode)", "Missing accents or ¿ ¡ marks count as wrong — like a strict teacher."),
       h("h2", null, "Backup / move devices"),
       h("p", { class: "small" }, `Progress saves automatically on this device. A backup code is your safety net — text it to a parent (or yourself). Paste it on any device to pick up exactly where you left off.${S.lastBackup ? ` Last backup: ${today() - S.lastBackup === 0 ? "today" : (today() - S.lastBackup) + " day(s) ago"}.` : ""}`),
@@ -4065,7 +4309,7 @@ if (typeof module !== "undefined") module.exports = { setS: x => S = x, getS: ()
       h("table", { class: "ptable" }, h("tr", null, h("th", null, "Day"), h("th", null, "Min"), h("th", null, "Answers"), h("th", null, "Accuracy")),
         S.sessions.slice(-10).reverse().map(s => h("tr", null, h("td", null, fmt(s.day)), h("td", null, Math.max(1, mins(s.ms))), h("td", null, s.n), h("td", null, s.n ? pct(s.c / s.n) : "—")))),
       h("h2", null, "How mastery is measured"),
-      h("p", { class: "small" }, `An item is mastered when ${esc(S.name)} types it correctly with no hints or multiple choice on 3 separate days, most recent 3 in a row. A chapter is mastered at 90% of items. New places on the map unlock after a boss challenge (${Math.ceil(10 * CP_PASS)}/10, typed, opens once ${pct(GATE_FRAC)} of the chapter's phrases have been answered right) or a Prove it challenge (${PROVE_PASS}/${PROVE_N}). Small spelling typos are accepted and flagged; grammar errors are not. Unlocking can happen quickly; “mastered” and the Spanish 2 readiness number only count multi-day proof. During the first 2 weeks a welcome boost doubles new material.`));
+      h("p", { class: "small" }, `An item is mastered when ${esc(S.name)} types it correctly with no hints on 2 different days (Spanish 1 items also count as mastered when typed right, unaided, the very first time they come up). A chapter is mastered at 90% of items, but that never blocks progress. New places on the map unlock after a boss challenge (${Math.ceil(10 * CP_PASS)}/10, typed, opens once ${pct(GATE_FRAC)} of the chapter's phrases have been answered right) or a Prove it challenge (${PROVE_PASS}/${PROVE_N}). Small spelling typos are accepted and flagged; grammar errors are not. Unlocking can happen quickly; “mastered” and the Spanish 2 readiness number only count multi-day proof. During the first 2 weeks a welcome boost doubles new material.`));
     setScreen(h("div", { class: "page" }, topbar("Parent view", settingsScreen), body));
   }
 
